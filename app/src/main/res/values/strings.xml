@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">EmpowerU</string>
+
+    <string name="welcome_register">Selamat Datang Di</string>
+    <string name="intro_register">Buat Akun</string>
+    <string name="button_register">Daftarkan</string>
+    <string name="welcome_login">Selamat Datang Kembali Di</string>
+    <string name="intro_login">Masukan Akun</string>
+    <string name="button_login">Masuk</string>
+    <string name="login_google">Masuk dengan Akun Google</string>
+
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="no_account">Belum mempunyai Akun?</string>
+    <string name="have_account">Sudah mempunyai Akun?</string>
+    <string name="click_here">Klik Disini</string>
+</resources>
