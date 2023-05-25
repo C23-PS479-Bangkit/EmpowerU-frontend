@@ -47,7 +47,7 @@ fun UmkmCard(
                 contentScale = ContentScale.Crop,
                 contentDescription = "Gambar UMKM",
                 modifier = Modifier
-                    .size(72.dp)
+                    .size(84.dp)
                     .clip(RoundedCornerShape(8.dp))
 
             )
@@ -67,7 +67,7 @@ fun UmkmCard(
                 Text(
                     text = umkm.category,
                     fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     modifier = Modifier
                         .padding(bottom = 4.dp)
                         .fillMaxWidth()

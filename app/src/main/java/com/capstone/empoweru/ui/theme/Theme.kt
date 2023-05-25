@@ -16,6 +16,13 @@ private val LightColorPalette = lightColors(
     primary = Red200,
     primaryVariant = Purple700,
     secondary = Teal200
+)
+
+private val BottomBarPallete = lightColors(
+    primary = White,
+    primaryVariant = Red200,
+    secondary = Teal200
+
 
     /* Other default colors to override
     background = Color.White,
@@ -28,7 +35,10 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun EmpowerUTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun EmpowerUTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
@@ -37,6 +47,16 @@ fun EmpowerUTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
 
     MaterialTheme(
         colors = colors,
+        typography = PoppinsTypography,
+        shapes = Shapes,
+        content = content
+    )
+}
+
+@Composable
+fun BottomBarTheme(content: @Composable () -> Unit) {
+    MaterialTheme(
+        colors = BottomBarPallete,
         typography = PoppinsTypography,
         shapes = Shapes,
         content = content
