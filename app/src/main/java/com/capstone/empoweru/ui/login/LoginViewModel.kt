@@ -1,5 +1,6 @@
 package com.capstone.empoweru.ui.login
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,7 @@ import com.capstone.empoweru.data.repository.AuthRepository
 import com.capstone.empoweru.data.response.LoginResult
 import kotlinx.coroutines.launch
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel(private val context: Context): ViewModel() {
 
     private val repository = AuthRepository()
 
@@ -22,6 +23,7 @@ class LoginViewModel: ViewModel() {
                 val response = repository.login(username, password)
                 if (response != null) {
                     // Login successful
+                    saveLoginStatus(true)
                     _loginResult.value = LoginResult(success = true)
                 } else {
                     // Login failed
@@ -35,5 +37,13 @@ class LoginViewModel: ViewModel() {
                 _loginResult.value = LoginResult(success = false, error = "An error occurred")
             }
         }
+    }
+
+    private fun saveLoginStatus(isLoggedIn: Boolean) {
+        val sharedPreferences =
+            context.getSharedPreferences("login", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
     }
 }

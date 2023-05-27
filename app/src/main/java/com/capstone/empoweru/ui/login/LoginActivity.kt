@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.empoweru.R
 import com.capstone.empoweru.databinding.ActivityLoginBinding
 import com.capstone.empoweru.ui.MainActivity
+import com.capstone.empoweru.ui.ViewModelFactory
 import com.capstone.empoweru.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -21,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactory(applicationContext)).get(LoginViewModel::class.java)
 
         // Set up click listeners
         binding.btnLogin.setOnClickListener {

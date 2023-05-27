@@ -10,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,10 +30,12 @@ import com.capstone.empoweru.R
 import com.capstone.empoweru.ui.theme.PoppinsTypography
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(viewModel: ProfileViewModel) {
     val profilePicture = painterResource(R.drawable.profile_dummy)
     val name = "Pom-Pom"
     val review = 28
+
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -69,7 +73,17 @@ fun ProfileScreen() {
                             textAlign = TextAlign.Center
                         )
 
-                        Spacer(modifier = Modifier.width(48.dp))
+                        IconButton(
+                            onClick = { viewModel.logout(context) },
+                            modifier = Modifier
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ExitToApp,
+                                contentDescription = "Logout"
+                            )
+                        }
+
+                        /*Spacer(modifier = Modifier.width(48.dp))*/
                     }
 
                     Spacer(modifier = Modifier.height(32.dp))
@@ -138,5 +152,5 @@ fun ProfileScreen() {
 @Preview(showBackground = true)
 @Composable
 fun ProfilePagePreview() {
-    ProfileScreen()
+    ProfileScreen(ProfileViewModel())
 }

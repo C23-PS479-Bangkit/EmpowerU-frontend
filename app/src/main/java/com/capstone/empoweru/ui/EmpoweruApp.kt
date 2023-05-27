@@ -21,11 +21,13 @@ import com.capstone.empoweru.ui.components.navigation.NavigationItem
 import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.home.HomeScreen
 import com.capstone.empoweru.ui.profile.ProfileScreen
+import com.capstone.empoweru.ui.profile.ProfileViewModel
 import com.capstone.empoweru.ui.theme.BottomBarTheme
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
 @Composable
 fun EmpoweruApp(
+    profileViewModel: ProfileViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
@@ -50,7 +52,7 @@ fun EmpoweruApp(
                     }
 
                     composable(Screen.Profile.route) {
-                        ProfileScreen()
+                        ProfileScreen(profileViewModel)
                     }
                 }
             }
@@ -127,5 +129,5 @@ private fun BottomBar(
 @Preview(showBackground = true)
 @Composable
 fun EmpoweruAppPreview() {
-    EmpoweruApp()
+    EmpoweruApp(profileViewModel = ProfileViewModel())
 }
