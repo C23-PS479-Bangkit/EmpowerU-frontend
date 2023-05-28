@@ -1,5 +1,7 @@
 package com.capstone.empoweru.data.response
 
+import com.google.gson.annotations.SerializedName
+
 data class ErrorResponse(
     val errors: ErrorDetails?,
     val error: String?,
@@ -7,7 +9,12 @@ data class ErrorResponse(
 )
 
 data class ErrorDetails(
-    val username: String?,
-    val password: String?,
-    val email: String?
+    @SerializedName("username")
+    val usernameError: String?,
+
+    @SerializedName("password")
+    val passwordError: String?,
+
+    @SerializedName("email")
+    val emailError: String?
 )

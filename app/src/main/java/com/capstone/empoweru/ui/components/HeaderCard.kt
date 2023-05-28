@@ -1,5 +1,6 @@
 package com.capstone.empoweru.ui.components
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -7,20 +8,29 @@ import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.empoweru.R
+import com.capstone.empoweru.ui.login.LoginViewModel
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
 @Composable
-fun HeaderCard(modifier: Modifier = Modifier) {
+fun HeaderCard(
+    modifier: Modifier = Modifier
+) {
+
+    val username = "Pom-Pom"
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -32,7 +42,7 @@ fun HeaderCard(modifier: Modifier = Modifier) {
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Halo, Pom-Pom",
+                    text = "Halo, $username",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )

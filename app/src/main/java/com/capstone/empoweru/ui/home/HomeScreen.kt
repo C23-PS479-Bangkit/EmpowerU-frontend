@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.capstone.empoweru.data.dummy.dummyUmkm
@@ -17,13 +16,15 @@ import com.capstone.empoweru.ui.components.SearchBar
 import com.capstone.empoweru.ui.components.UmkmCard
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
         HeaderCard(
-            modifier = Modifier
+            modifier = Modifier,
         )
         SearchBar(
             modifier = Modifier.fillMaxWidth()
@@ -68,7 +69,5 @@ fun UmkmList(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    EmpowerUTheme {
-        HomeScreen()
-    }
+    HomeScreen()
 }

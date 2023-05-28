@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class RegisterViewModel: ViewModel() {
 
     private val repository = AuthRepository()
+    var errorMessage: String? = null
 
     fun register(username: String, password: String, email: String): LiveData<RegisterResponse?> {
         val registerResponse = MutableLiveData<RegisterResponse?>()
@@ -22,6 +23,7 @@ class RegisterViewModel: ViewModel() {
                 registerResponse.value = response
             } catch (e: ApiException) {
                 // Handle Exception
+                errorMessage = e.message
                 registerResponse.value = null
             }
         }

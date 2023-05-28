@@ -129,5 +129,7 @@ private fun BottomBar(
 @Preview(showBackground = true)
 @Composable
 fun EmpoweruAppPreview() {
-    EmpoweruApp(profileViewModel = ProfileViewModel())
+    EmpoweruApp(
+        profileViewModel = ProfileViewModel()
+    )
 }

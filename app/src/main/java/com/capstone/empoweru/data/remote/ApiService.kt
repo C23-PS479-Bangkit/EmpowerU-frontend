@@ -2,6 +2,7 @@ package com.capstone.empoweru.data.remote
 
 import com.capstone.empoweru.data.request.LoginRequest
 import com.capstone.empoweru.data.request.RegisterRequest
+import com.capstone.empoweru.data.request.UserDataRequest
 import com.capstone.empoweru.data.response.LoginResponse
 import com.capstone.empoweru.data.response.RegisterResponse
 import com.capstone.empoweru.data.response.UserDataResponse
@@ -19,5 +20,5 @@ interface ApiService {
     suspend fun register(@Body request: RegisterRequest): Response<RegisterResponse>
 
     @POST("datauser")
-    suspend fun getUserData(@Query("id") id: String): Response<UserDataResponse>
+    suspend fun getUserData(@Body request: UserDataRequest): Response<UserDataResponse>
 }

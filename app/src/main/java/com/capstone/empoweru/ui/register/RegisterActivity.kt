@@ -35,22 +35,8 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.edRegisterEmail.text.toString().trim()
             val password = binding.edRegisterPassword.text.toString().trim()
 
-            if (validateInput(username, email, password)) {
-                registerUser(username, email, password)
-            }
+            registerUser(username, email, password)
         }
-    }
-
-
-    private fun validateInput(username: String, email: String, password: String): Boolean {
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill in all the fields", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        // Add additional validation
-
-        return true
     }
 
     private fun registerUser(username: String, email: String, password: String) {
@@ -66,7 +52,12 @@ class RegisterActivity : AppCompatActivity() {
                 finish()
             } else {
                 // Registration failed
-                Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()
+                val errorMessage = viewModel.errorMessage
+                if (!errorMessage.isNullOrEmpty()) {
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.empoweru.R
+import com.capstone.empoweru.data.repository.AuthRepository
 import com.capstone.empoweru.databinding.ActivityLoginBinding
 import com.capstone.empoweru.ui.MainActivity
 import com.capstone.empoweru.ui.ViewModelFactory
@@ -28,8 +29,13 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             val username = binding.edLoginName.text.toString()
             val password = binding.edLoginPassword.text.toString()
-            binding.btnLogin.setLoading(true)
-            viewModel.login(username, password)
+
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please fill in all the fields", Toast.LENGTH_SHORT).show()
+            } else {
+                binding.btnLogin.setLoading(true)
+                viewModel.login(username, password)
+            }
         }
 
         // Observe login result
