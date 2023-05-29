@@ -1,5 +1,6 @@
 package com.capstone.empoweru.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -13,18 +14,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.capstone.empoweru.data.dummy.dummyUmkm
 import com.capstone.empoweru.ui.components.navigation.NavigationItem
 import com.capstone.empoweru.ui.components.navigation.Screen
+import com.capstone.empoweru.ui.detailUmkm.DetailScreen
 import com.capstone.empoweru.ui.home.HomeScreen
 import com.capstone.empoweru.ui.profile.ProfileScreen
 import com.capstone.empoweru.ui.profile.ProfileViewModel
 import com.capstone.empoweru.ui.theme.BottomBarTheme
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun EmpoweruApp(
     profileViewModel: ProfileViewModel,
@@ -36,22 +42,38 @@ fun EmpoweruApp(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            Scaffold(
-                bottomBar = {
-                    BottomBar(navController)
-                },
+            NavHost(
+                navController = navController,
+                startDestination = Screen.Home.route,
                 modifier = modifier
-            ) { innerpadding ->
-                NavHost(
-                    navController = navController,
-                    startDestination = Screen.Home.route,
-                    modifier = Modifier.padding(innerpadding)
-                ) {
-                    composable(Screen.Home.route) {
-                        HomeScreen()
+            ) {
+                composable(Screen.Home.route) {
+                    Scaffold(
+                        bottomBar = {
+                            BottomBar(navController)
+                        },
+                        modifier = Modifier
+                    ) {
+                        HomeScreen(navController)
                     }
+                }
 
-                    composable(Screen.Profile.route) {
+                composable(
+                    route = "${Screen.Detail.route}/{umkmId}",
+                    arguments = listOf(navArgument("umkmId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val umkmId = backStackEntry.arguments?.getString("umkmId")
+                    val umkm = dummyUmkm.find { it.title == umkmId }
+                    DetailScreen(umkm = umkm!!)
+                }
+
+                composable(Screen.Profile.route) {
+                    Scaffold(
+                        bottomBar = {
+                            BottomBar(navController)
+                        },
+                        modifier = Modifier
+                    ) {
                         ProfileScreen(profileViewModel)
                     }
                 }
@@ -59,6 +81,7 @@ fun EmpoweruApp(
         }
     }
 }
+
 
 @Composable
 private fun BottomBar(

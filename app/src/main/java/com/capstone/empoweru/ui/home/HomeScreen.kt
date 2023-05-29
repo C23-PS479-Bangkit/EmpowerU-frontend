@@ -8,20 +8,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.capstone.empoweru.data.dummy.Umkm
 import com.capstone.empoweru.data.dummy.dummyUmkm
 import com.capstone.empoweru.data.dummy.getCategory
 import com.capstone.empoweru.ui.components.CategoryButton
 import com.capstone.empoweru.ui.components.HeaderCard
 import com.capstone.empoweru.ui.components.SearchBar
 import com.capstone.empoweru.ui.components.UmkmCard
+import com.capstone.empoweru.ui.components.navigation.Screen
 
 @Composable
 fun HomeScreen(
-
+    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(bottom = 52.dp)
     ) {
         HeaderCard(
             modifier = Modifier,
@@ -33,7 +39,10 @@ fun HomeScreen(
             modifier = Modifier
         )
         UmkmList(
-            modifier = Modifier
+            modifier = Modifier,
+            onItemClick = { umkm ->
+                navController.navigate("${Screen.Detail.route}/${umkm.title}")
+            }
         )
     }
 }
@@ -55,13 +64,14 @@ fun CategoryRow(
 
 @Composable
 fun UmkmList(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemClick: (Umkm) -> Unit
 ) {
     val umkmList = dummyUmkm
 
     LazyColumn {
         items(umkmList) { umkm -> 
-            UmkmCard(umkm = umkm, onClick = { })
+            UmkmCard(umkm = umkm, onClick = { onItemClick(umkm) })
         }
     }
 }
@@ -69,5 +79,6 @@ fun UmkmList(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    val navController = rememberNavController()
+    HomeScreen(navController = navController)
 }

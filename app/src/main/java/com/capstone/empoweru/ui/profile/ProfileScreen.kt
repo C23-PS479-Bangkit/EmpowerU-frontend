@@ -30,7 +30,10 @@ import com.capstone.empoweru.R
 import com.capstone.empoweru.ui.theme.PoppinsTypography
 
 @Composable
-fun ProfileScreen(viewModel: ProfileViewModel) {
+fun ProfileScreen(
+    viewModel: ProfileViewModel,
+    modifier: Modifier = Modifier
+) {
     val profilePicture = painterResource(R.drawable.profile_dummy)
     val name = "Pom-Pom"
     val review = 28
