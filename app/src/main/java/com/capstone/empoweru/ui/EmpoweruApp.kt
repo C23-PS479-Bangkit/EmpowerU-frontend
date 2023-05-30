@@ -2,7 +2,6 @@ package com.capstone.empoweru.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -23,10 +22,11 @@ import androidx.navigation.navArgument
 import com.capstone.empoweru.data.dummy.dummyUmkm
 import com.capstone.empoweru.ui.components.navigation.NavigationItem
 import com.capstone.empoweru.ui.components.navigation.Screen
-import com.capstone.empoweru.ui.detailUmkm.DetailScreen
+import com.capstone.empoweru.ui.detail.DetailScreen
 import com.capstone.empoweru.ui.home.HomeScreen
 import com.capstone.empoweru.ui.profile.ProfileScreen
 import com.capstone.empoweru.ui.profile.ProfileViewModel
+import com.capstone.empoweru.ui.review.ReviewScreen
 import com.capstone.empoweru.ui.theme.BottomBarTheme
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
@@ -64,7 +64,7 @@ fun EmpoweruApp(
                 ) { backStackEntry ->
                     val umkmId = backStackEntry.arguments?.getString("umkmId")
                     val umkm = dummyUmkm.find { it.title == umkmId }
-                    DetailScreen(umkm = umkm!!)
+                    DetailScreen(umkm = umkm!!, navController = navController)
                 }
 
                 composable(Screen.Profile.route) {
@@ -76,6 +76,10 @@ fun EmpoweruApp(
                     ) {
                         ProfileScreen(profileViewModel)
                     }
+                }
+
+                composable(Screen.Review.route) { // Add the Review composable
+                    ReviewScreen(navController)
                 }
             }
         }
@@ -113,7 +117,7 @@ private fun BottomBar(
                 navigationItems.map { item ->
 
                     val isSelected = currentRoute == item.screen.route
-                    val alpha = if (isSelected) 1f else 0.5f
+                    val alpha = if (isSelected) 1f else 0.25f
 
                     BottomNavigationItem(
                         icon = {

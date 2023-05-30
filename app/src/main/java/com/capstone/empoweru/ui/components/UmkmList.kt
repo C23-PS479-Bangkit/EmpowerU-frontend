@@ -57,8 +57,8 @@ fun UmkmCard(
             Column() {
                 Text(
                     text = umkm.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp,
                     maxLines = 1,
                     modifier = Modifier
                         .fillMaxWidth()

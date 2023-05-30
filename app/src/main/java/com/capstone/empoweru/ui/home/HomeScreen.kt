@@ -4,12 +4,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.capstone.empoweru.data.dummy.CategoryItem
 import com.capstone.empoweru.data.dummy.Umkm
 import com.capstone.empoweru.data.dummy.dummyUmkm
 import com.capstone.empoweru.data.dummy.getCategory
@@ -18,6 +19,7 @@ import com.capstone.empoweru.ui.components.HeaderCard
 import com.capstone.empoweru.ui.components.SearchBar
 import com.capstone.empoweru.ui.components.UmkmCard
 import com.capstone.empoweru.ui.components.navigation.Screen
+import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
 @Composable
 fun HomeScreen(
@@ -30,7 +32,8 @@ fun HomeScreen(
             .padding(bottom = 52.dp)
     ) {
         HeaderCard(
-            modifier = Modifier,
+            modifier = Modifier.
+                    padding(top = 8.dp)
         )
         SearchBar(
             modifier = Modifier.fillMaxWidth()
@@ -52,12 +55,19 @@ fun CategoryRow(
     modifier: Modifier = Modifier
 ) {
     val categoryList = getCategory()
+    var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
     
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(categoryList) { category -> 
-            CategoryButton(category = category)
+            CategoryButton(
+                category = category,
+                selectedCategory = selectedCategory,
+                onCategorySelected = { newCategory ->
+                    selectedCategory = newCategory
+                }
+            )
         }
     }
 }
@@ -79,6 +89,8 @@ fun UmkmList(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    val navController = rememberNavController()
-    HomeScreen(navController = navController)
+    EmpowerUTheme() {
+        val navController = rememberNavController()
+        HomeScreen(navController = navController)
+    }
 }
