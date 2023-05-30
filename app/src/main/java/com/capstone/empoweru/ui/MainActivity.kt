@@ -11,14 +11,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.capstone.empoweru.BuildConfig
 import com.capstone.empoweru.ui.profile.ProfileViewModel
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
+import com.google.android.libraries.places.api.Places
 
 class MainActivity : ComponentActivity() {
 
     private val profileViewModel: ProfileViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Places.initialize(applicationContext, BuildConfig.PLACES_API)
         setContent {
             EmpoweruApp(profileViewModel)
         }

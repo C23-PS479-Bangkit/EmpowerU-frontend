@@ -20,6 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.capstone.empoweru.data.dummy.dummyUmkm
+import com.capstone.empoweru.ui.addplaces.AddPlaceScreen
 import com.capstone.empoweru.ui.components.navigation.NavigationItem
 import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.detail.DetailScreen
@@ -80,6 +81,10 @@ fun EmpoweruApp(
 
                 composable(Screen.Review.route) { // Add the Review composable
                     ReviewScreen(navController)
+                }
+
+                composable(Screen.AddPlaces.route) {
+                    AddPlaceScreen(navController)
                 }
             }
         }
