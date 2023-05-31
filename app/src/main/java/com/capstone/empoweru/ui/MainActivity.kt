@@ -1,6 +1,8 @@
 package com.capstone.empoweru.ui
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -25,5 +27,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             EmpoweruApp(profileViewModel)
         }
+
+        window.statusBarColor = Color.WHITE
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
     }
 }

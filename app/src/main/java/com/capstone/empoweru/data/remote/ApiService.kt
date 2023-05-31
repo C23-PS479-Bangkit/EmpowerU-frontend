@@ -1,8 +1,10 @@
 package com.capstone.empoweru.data.remote
 
+import com.capstone.empoweru.data.request.CreateLocationRequest
 import com.capstone.empoweru.data.request.LoginRequest
 import com.capstone.empoweru.data.request.RegisterRequest
 import com.capstone.empoweru.data.request.UserDataRequest
+import com.capstone.empoweru.data.response.CreateLocationResponse
 import com.capstone.empoweru.data.response.LoginResponse
 import com.capstone.empoweru.data.response.RegisterResponse
 import com.capstone.empoweru.data.response.UserDataResponse
@@ -21,4 +23,7 @@ interface ApiService {
 
     @POST("datauser")
     suspend fun getUserData(@Body request: UserDataRequest): Response<UserDataResponse>
+
+    @POST("create_location")
+    suspend fun createLocation(@Body request: CreateLocationRequest): Response<CreateLocationResponse>
 }

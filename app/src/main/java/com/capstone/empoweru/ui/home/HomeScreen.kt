@@ -38,7 +38,7 @@ fun HomeScreen(
                 onClick = { navController.navigate(Screen.AddPlaces.route) },
                 backgroundColor = Color.Red,
                 modifier = Modifier
-                    .padding(bottom = 48.dp)
+                    .padding(bottom = 52.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
