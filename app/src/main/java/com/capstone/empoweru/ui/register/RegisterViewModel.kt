@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.empoweru.data.repository.ApiException
-import com.capstone.empoweru.data.repository.AuthRepository
+import com.capstone.empoweru.data.repository.RegisterRepository
 import com.capstone.empoweru.data.response.RegisterResponse
 import kotlinx.coroutines.launch
 
-class RegisterViewModel: ViewModel() {
+class RegisterViewModel(): ViewModel() {
 
-    private val repository = AuthRepository()
+    private val repository = RegisterRepository()
     var errorMessage: String? = null
 
     fun register(username: String, password: String, email: String): LiveData<RegisterResponse?> {

@@ -46,9 +46,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
 
-    <com.capstone.empoweru.widget.EditText
+    <EditText
         android:id="@+id/ed_register_name"
-        style="@style/poppins_light"
+        style="@style/poppins_medium"
+        android:maxLines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -57,17 +58,18 @@
         android:drawablePadding="@dimen/spacing_8"
         android:hint="@string/username"
         android:padding="@dimen/spacing_16"
-        android:textColor="@color/gray_200"
-        android:textSize="@dimen/text_size_12"
+        android:textSize="@dimen/text_size_14"
+        android:background="@drawable/bg_selected_edit_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_create_account"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.capstone.empoweru.widget.EditText
+    <EditText
         android:id="@+id/ed_register_email"
-        style="@style/poppins_light"
+        style="@style/poppins_medium"
+        android:maxLines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -75,9 +77,10 @@
         android:drawableStart="@drawable/ic_email"
         android:drawablePadding="@dimen/spacing_8"
         android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:padding="@dimen/spacing_16"
-        android:textColor="@color/gray_200"
-        android:textSize="@dimen/text_size_12"
+        android:textSize="@dimen/text_size_14"
+        android:background="@drawable/bg_selected_edit_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.375"
@@ -85,9 +88,9 @@
         app:layout_constraintTop_toBottomOf="@id/ed_register_name"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.capstone.empoweru.widget.EditText
+    <com.capstone.empoweru.widget.PasswordEditText
         android:id="@+id/ed_register_password"
-        style="@style/poppins_light"
+        style="@style/poppins_medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -98,8 +101,8 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="@dimen/spacing_16"
-        android:textColor="@color/gray_200"
-        android:textSize="@dimen/text_size_12"
+        android:background="@drawable/bg_selected_edit_text"
+        android:textSize="@dimen/text_size_14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +142,7 @@
 
     <TextView
         android:id="@+id/tv_click_have_account"
-        style="@style/poppins_bold"
+        style="@style/poppins_medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"

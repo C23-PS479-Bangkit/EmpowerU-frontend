@@ -3,22 +3,31 @@ package com.capstone.empoweru.ui.profile
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.capstone.empoweru.ui.login.LoginActivity
+import com.capstone.empoweru.utils.UserPreferences
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel(
+    val userPreferences: UserPreferences
+) : ViewModel() {
 
     fun logout(context: Context) {
-        val sharedPreferences =
-            context.getSharedPreferences("login", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.remove("isLoggedIn")
-        editor.apply()
+        userPreferences.isLoggedIn = false
+        userPreferences.username = null
+        userPreferences.email = null
 
-        // You can perform any additional logout logic here, such as navigating to the LoginActivity
-
-        // Example: Navigating to LoginActivity
+        // Navigate to LoginActivity
         val intent = Intent(context, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
+    }
+}
+
+class ProfileViewModelFactory(private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(userPreferences) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

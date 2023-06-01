@@ -15,21 +15,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.capstone.empoweru.BuildConfig
 import com.capstone.empoweru.ui.profile.ProfileViewModel
+import com.capstone.empoweru.ui.profile.ProfileViewModelFactory
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
+import com.capstone.empoweru.utils.UserPreferences
 import com.google.android.libraries.places.api.Places
 
 class MainActivity : ComponentActivity() {
-
-    private val profileViewModel: ProfileViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Places.initialize(applicationContext, BuildConfig.PLACES_API)
+
+        val userPreferences = UserPreferences.getInstance(this)
+
         setContent {
-            EmpoweruApp(profileViewModel)
+            EmpoweruApp(userPreferences = userPreferences)
         }
 
         window.statusBarColor = Color.WHITE
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-
     }
 }

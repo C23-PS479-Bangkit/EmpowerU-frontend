@@ -51,9 +51,6 @@
     </style>
 
     <style name="NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">?attr/colorPrimary</item>
-        <item name="colorPrimaryDark">?attr/colorPrimaryDark</item>
-        <item name="colorOnPrimary">?attr/colorOnPrimary</item>
         <item name="android:statusBarColor">@color/white</item>
     </style>
 </resources>

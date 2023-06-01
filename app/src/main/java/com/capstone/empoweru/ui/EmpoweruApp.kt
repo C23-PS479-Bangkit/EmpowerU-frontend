@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -25,19 +27,26 @@ import com.capstone.empoweru.ui.components.navigation.NavigationItem
 import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.detail.DetailScreen
 import com.capstone.empoweru.ui.home.HomeScreen
+import com.capstone.empoweru.ui.home.HomeScreenViewModel
 import com.capstone.empoweru.ui.profile.ProfileScreen
 import com.capstone.empoweru.ui.profile.ProfileViewModel
+import com.capstone.empoweru.ui.profile.ProfileViewModelFactory
 import com.capstone.empoweru.ui.review.ReviewScreen
 import com.capstone.empoweru.ui.theme.BottomBarTheme
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
+import com.capstone.empoweru.utils.UserPreferences
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun EmpoweruApp(
-    profileViewModel: ProfileViewModel,
+    userPreferences: UserPreferences,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
+
+    val homeScreenViewModel = HomeScreenViewModel(userPreferences)
+    val profileViewModel = viewModel<ProfileViewModel>(factory = ProfileViewModelFactory(userPreferences))
+
     EmpowerUTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -55,7 +64,7 @@ fun EmpoweruApp(
                         },
                         modifier = Modifier
                     ) {
-                        HomeScreen(navController)
+                        HomeScreen(navController, homeScreenViewModel)
                     }
                 }
 
@@ -75,7 +84,7 @@ fun EmpoweruApp(
                         },
                         modifier = Modifier
                     ) {
-                        ProfileScreen(profileViewModel)
+                        ProfileScreen(navController, profileViewModel)
                     }
                 }
 
@@ -118,7 +127,7 @@ private fun BottomBar(
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
 
-            BottomNavigation() {
+            BottomNavigation {
                 navigationItems.map { item ->
 
                     val isSelected = currentRoute == item.screen.route
@@ -161,7 +170,9 @@ private fun BottomBar(
 @Preview(showBackground = true)
 @Composable
 fun EmpoweruAppPreview() {
+    val userPreferences = UserPreferences.getInstance(LocalContext.current)
+
     EmpoweruApp(
-        profileViewModel = ProfileViewModel()
+        userPreferences = userPreferences
     )
 }

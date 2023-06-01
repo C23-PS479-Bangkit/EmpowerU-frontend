@@ -1,5 +1,6 @@
 package com.capstone.empoweru.ui.profile
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,19 +27,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.capstone.empoweru.R
 import com.capstone.empoweru.ui.theme.PoppinsTypography
+import com.capstone.empoweru.utils.UserPreferences
 
 @Composable
 fun ProfileScreen(
+    navController: NavHostController,
     viewModel: ProfileViewModel,
     modifier: Modifier = Modifier
 ) {
     val profilePicture = painterResource(R.drawable.profile_dummy)
-    val name = "Pom-Pom"
     val review = 28
 
     val context = LocalContext.current
+    val username = viewModel.userPreferences.username ?: ""
 
     Box(
         modifier = Modifier
@@ -57,7 +62,7 @@ fun ProfileScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         IconButton(
-                            onClick = { },
+                            onClick = { navController.popBackStack() },
                             modifier = Modifier
                         ) {
                             Icon(
@@ -100,7 +105,7 @@ fun ProfileScreen(
                             .clip(CircleShape)
                     )
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(48.dp))
 
                     Text(
                         text = "Username",
@@ -114,7 +119,7 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = name,
+                        text = username ?: "",
                         style = MaterialTheme.typography.h1,
                         fontSize = 24.sp,
                         modifier = Modifier
@@ -155,5 +160,10 @@ fun ProfileScreen(
 @Preview(showBackground = true)
 @Composable
 fun ProfilePagePreview() {
-    ProfileScreen(ProfileViewModel())
+    val userPreferences = UserPreferences.getInstance(LocalContext.current)
+    val viewModel = ProfileViewModel(userPreferences)
+
+    val navController = rememberNavController()
+
+    ProfileScreen(navController, viewModel)
 }

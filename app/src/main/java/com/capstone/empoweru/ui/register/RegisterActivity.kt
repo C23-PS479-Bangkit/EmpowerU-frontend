@@ -35,7 +35,9 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.edRegisterEmail.text.toString().trim()
             val password = binding.edRegisterPassword.text.toString().trim()
 
-            registerUser(username, email, password)
+            if (binding.edRegisterPassword.isValid()) {
+                registerUser(username, email, password)
+            }
         }
     }
 

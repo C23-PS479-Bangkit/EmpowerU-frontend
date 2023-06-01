@@ -5,44 +5,42 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.capstone.empoweru.databinding.ActivitySplashBinding
 import com.capstone.empoweru.ui.MainActivity
 import com.capstone.empoweru.ui.login.LoginActivity
+import com.capstone.empoweru.utils.UserPreferences
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
+    private lateinit var viewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Delay for 2 seconds (2000 milliseconds) before checking user login status
-        Handler(Looper.getMainLooper()).postDelayed({
-            checkUserLoggedIn()
-        }, 2000)
-    }
+        val userPreferences = UserPreferences.getInstance(this)
+        val viewModelFactory = SplashViewModelFactory(userPreferences)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SplashViewModel::class.java)
 
-    private fun checkUserLoggedIn() {
-        val isLoggedIn = getUserLoginStatus()
+        // Show the image and progress button
+        binding.imageSplash.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
 
-        if (isLoggedIn) {
-            // User is logged in, navigate to MainActivity
-            navigateToMainActivity()
-        } else {
-            // User is not logged in, navigate to LoginActivity
-            navigateToLoginActivity()
+        // Check user login status
+        viewModel.checkUserLoginStatus { isLoggedIn ->
+            if (isLoggedIn) {
+                // User is logged in, navigate to MainActivity
+                navigateToMainActivity()
+            } else {
+                // User is not logged in, navigate to LoginActivity
+                navigateToLoginActivity()
+            }
         }
-    }
-
-    private fun getUserLoginStatus(): Boolean {
-        val sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE)
-        return sharedPreferences.getBoolean("isLoggedIn", false)
     }
 
     private fun navigateToMainActivity() {

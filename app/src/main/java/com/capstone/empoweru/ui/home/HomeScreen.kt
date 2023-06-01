@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -24,14 +25,20 @@ import com.capstone.empoweru.ui.components.HeaderCard
 import com.capstone.empoweru.ui.components.SearchBar
 import com.capstone.empoweru.ui.components.UmkmCard
 import com.capstone.empoweru.ui.components.navigation.Screen
+import com.capstone.empoweru.ui.profile.ProfileViewModel
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
+import com.capstone.empoweru.utils.UserPreferences
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     navController: NavHostController,
+    homeScreenViewModel: HomeScreenViewModel,
     modifier: Modifier = Modifier
 ) {
+
+    val username = homeScreenViewModel.getUsername()
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -56,6 +63,7 @@ fun HomeScreen(
                 .padding(bottom = 52.dp)
         ) {
             HeaderCard(
+                username = username,
                 modifier = Modifier.
                 padding(top = 8.dp)
             )
@@ -115,7 +123,10 @@ fun UmkmList(
 @Composable
 fun HomeScreenPreview() {
     EmpowerUTheme() {
+        val userPreferences = UserPreferences.getInstance(LocalContext.current)
+        val viewModel = HomeScreenViewModel(userPreferences)
+
         val navController = rememberNavController()
-        HomeScreen(navController = navController)
+        HomeScreen(navController = navController, viewModel)
     }
 }
