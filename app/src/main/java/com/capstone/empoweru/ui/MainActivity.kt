@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.capstone.empoweru.BuildConfig
+import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.profile.ProfileViewModel
 import com.capstone.empoweru.ui.profile.ProfileViewModelFactory
 import com.capstone.empoweru.ui.theme.EmpowerUTheme

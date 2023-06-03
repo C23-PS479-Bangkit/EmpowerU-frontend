@@ -9,25 +9,29 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.capstone.empoweru.data.dummy.CategoryItem
-import com.capstone.empoweru.data.dummy.Umkm
-import com.capstone.empoweru.data.dummy.dummyUmkm
 import com.capstone.empoweru.data.dummy.getCategory
+import com.capstone.empoweru.data.remote.ApiConfig
+import com.capstone.empoweru.data.repository.LocationRepository
+import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CategoryButton
 import com.capstone.empoweru.ui.components.HeaderCard
 import com.capstone.empoweru.ui.components.SearchBar
 import com.capstone.empoweru.ui.components.UmkmCard
 import com.capstone.empoweru.ui.components.navigation.Screen
-import com.capstone.empoweru.ui.profile.ProfileViewModel
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.utils.UserPreferences
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -38,6 +42,12 @@ fun HomeScreen(
 ) {
 
     val username = homeScreenViewModel.getUsername()
+    val locations = homeScreenViewModel.locations.value
+    val isLoading = homeScreenViewModel.isLoading.value
+
+    LaunchedEffect(Unit) {
+        homeScreenViewModel.fetchLocations()
+    }
 
     Scaffold(
         floatingActionButton = {
@@ -75,9 +85,13 @@ fun HomeScreen(
             )
             UmkmList(
                 modifier = Modifier,
-                onItemClick = { umkm ->
-                    navController.navigate("${Screen.Detail.route}/${umkm.title}")
-                }
+                onItemClick = { location ->
+                    navController.navigate("${Screen.Detail.route}/${location.name}") {
+                        launchSingleTop = true
+                    }
+                },
+                locations = locations,
+                isLoading = isLoading
             )
         }
     }
@@ -89,11 +103,11 @@ fun CategoryRow(
 ) {
     val categoryList = getCategory()
     var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
-    
+
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
-        items(categoryList) { category -> 
+        items(categoryList) { category ->
             CategoryButton(
                 category = category,
                 selectedCategory = selectedCategory,
@@ -108,13 +122,25 @@ fun CategoryRow(
 @Composable
 fun UmkmList(
     modifier: Modifier = Modifier,
-    onItemClick: (Umkm) -> Unit
+    onItemClick: (Location) -> Unit,
+    locations: List<Location>,
+    isLoading: Boolean
 ) {
-    val umkmList = dummyUmkm
+    LazyColumn(modifier) {
+        items(locations) { location ->
+            UmkmCard(location, onClick = { onItemClick(location) })
+        }
 
-    LazyColumn {
-        items(umkmList) { umkm -> 
-            UmkmCard(umkm = umkm, onClick = { onItemClick(umkm) })
+        if (isLoading) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillParentMaxSize()
+                        .wrapContentSize(Alignment.Center)
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
         }
     }
 }
@@ -124,7 +150,10 @@ fun UmkmList(
 fun HomeScreenPreview() {
     EmpowerUTheme() {
         val userPreferences = UserPreferences.getInstance(LocalContext.current)
-        val viewModel = HomeScreenViewModel(userPreferences)
+        val apiService = ApiConfig.apiService
+        val locationRepository = LocationRepository(apiService)
+
+        val viewModel = HomeScreenViewModel(userPreferences, locationRepository)
 
         val navController = rememberNavController()
         HomeScreen(navController = navController, viewModel)

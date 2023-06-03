@@ -24,11 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.empoweru.data.dummy.Umkm
 import com.capstone.empoweru.R
+import com.capstone.empoweru.data.response.Location
+import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UmkmCard(
-    umkm: Umkm,
+    location: Location,
     onClick: () -> Unit
 ) {
     Card(
@@ -43,7 +45,7 @@ fun UmkmCard(
                 .padding(16.dp)
         ) {
             Image(
-                painter = painterResource(id = umkm.image),
+                painter = painterResource(R.drawable.dummy_umkm),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Gambar UMKM",
                 modifier = Modifier
@@ -51,23 +53,24 @@ fun UmkmCard(
                     .clip(RoundedCornerShape(8.dp))
 
             )
-            
+
             Spacer(modifier = Modifier.width(16.dp))
-            
+
             Column() {
                 Text(
-                    text = umkm.title,
+                    text = location.name,
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 18.sp,
+                    fontSize = 16.sp,
                     maxLines = 1,
                     modifier = Modifier
                         .fillMaxWidth()
                 )
 
                 Text(
-                    text = umkm.category,
+                    text = location.type.take(2).joinToString(", "),
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,
+                    maxLines = 1,
                     modifier = Modifier
                         .padding(bottom = 4.dp)
                         .fillMaxWidth()
@@ -85,11 +88,11 @@ fun UmkmCard(
                         modifier = Modifier
                             .size(20.dp)
                     )
-                    
+
                     Spacer(modifier = Modifier.width(4.dp))
 
                     Text(
-                        text = umkm.rating.toString(),
+                        text = String.format("%.1f", location.rating),
                         fontWeight = FontWeight.Medium,
                         fontSize = 16.sp
                     )
@@ -99,18 +102,20 @@ fun UmkmCard(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun UmkmCardPreview() {
-    val umkm = Umkm(
-        image = R.drawable.dummy_umkm,
-        title = "Restoran Di Inazuma",
-        category = "Kuliner",
-        rating = 4.5
+    val location = Location(
+        address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
+        name = "MargoCity",
+        type = listOf("shopping_mall",
+            "point_of_interest",
+            "establishment"),
+        rating = 7.3,
+        GMapsID = "abcd1234"
     )
     
-    UmkmCard(
-        umkm = umkm,
-        onClick = { }
-    )
+    EmpowerUTheme() {
+        UmkmCard(location = location) { }
+    }
 }

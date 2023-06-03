@@ -6,8 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +21,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.capstone.empoweru.data.dummy.dummyUmkm
+import com.capstone.empoweru.data.remote.ApiConfig
+import com.capstone.empoweru.data.repository.LocationRepository
+import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.addplaces.AddPlaceScreen
 import com.capstone.empoweru.ui.components.navigation.NavigationItem
 import com.capstone.empoweru.ui.components.navigation.Screen
@@ -44,8 +46,17 @@ fun EmpoweruApp(
     navController: NavHostController = rememberNavController(),
 ) {
 
-    val homeScreenViewModel = HomeScreenViewModel(userPreferences)
+    var locations by remember { mutableStateOf(emptyList<Location>()) }
+
+    val apiService = ApiConfig.apiService
+    val locationRepository = LocationRepository(apiService)
+
+    val homeScreenViewModel = HomeScreenViewModel(userPreferences, locationRepository)
     val profileViewModel = viewModel<ProfileViewModel>(factory = ProfileViewModelFactory(userPreferences))
+
+    LaunchedEffect(Unit) {
+        locations =  locationRepository.getListOfLocations()
+    }
 
     EmpowerUTheme {
         Surface(
@@ -69,12 +80,17 @@ fun EmpoweruApp(
                 }
 
                 composable(
-                    route = "${Screen.Detail.route}/{umkmId}",
-                    arguments = listOf(navArgument("umkmId") { type = NavType.StringType })
+                    route = "${Screen.Detail.route}/{name}",
+                    arguments = listOf(navArgument("name") { type = NavType.StringType })
                 ) { backStackEntry ->
-                    val umkmId = backStackEntry.arguments?.getString("umkmId")
-                    val umkm = dummyUmkm.find { it.title == umkmId }
-                    DetailScreen(umkm = umkm!!, navController = navController)
+                    val arguments = requireNotNull(backStackEntry.arguments)
+                    val name = arguments.getString("name")
+                    val location = locations.find { it.name == name }
+                    if (location != null) {
+                        DetailScreen(location, navController)
+                    } else {
+                        // Handle the case where the location is not found
+                    }
                 }
 
                 composable(Screen.Profile.route) {
@@ -171,8 +187,17 @@ private fun BottomBar(
 @Composable
 fun EmpoweruAppPreview() {
     val userPreferences = UserPreferences.getInstance(LocalContext.current)
+    val location = Location(
+        address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
+        name = "MargoCity",
+        type = listOf("shopping_mall",
+            "point_of_interest",
+            "establishment"),
+        rating = 7.3,
+        GMapsID = "abcd1234"
+    )
 
     EmpoweruApp(
-        userPreferences = userPreferences
+        userPreferences = userPreferences,
     )
 }

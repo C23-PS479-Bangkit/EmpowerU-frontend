@@ -25,17 +25,17 @@ import com.capstone.empoweru.data.dummy.Umkm
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.R
 import com.capstone.empoweru.data.dummy.generateDummyComments
+import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CommentCard
 import com.capstone.empoweru.ui.components.navigation.Screen
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen(
-    umkm: Umkm,
-    modifier: Modifier = Modifier,
-    navController: NavHostController
+    location: Location,
+    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
-    val address = "Jl. Siliwangi No.1, Depok, Kec. Pancoran Mas, Kota Depok, Jawa Barat 16431"
     val comment = generateDummyComments()
 
     Scaffold(
@@ -59,7 +59,7 @@ fun DetailScreen(
                 .fillMaxSize()
         ) {
             Image(
-                painter = painterResource(id = umkm.image),
+                painter = painterResource(R.drawable.dummy_umkm),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Umkm Image",
                 modifier = Modifier
@@ -70,7 +70,7 @@ fun DetailScreen(
             Spacer(modifier = Modifier.height(18.dp))
 
             Text(
-                text = umkm.title,
+                text = location.name,
                 style = MaterialTheme.typography.h1,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
@@ -82,7 +82,7 @@ fun DetailScreen(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = address,
+                text = location.address,
                 style = MaterialTheme.typography.body1,
                 fontSize = 14.sp,
                 modifier = Modifier
@@ -116,9 +116,9 @@ fun DetailScreen(
                 Spacer(modifier = Modifier.width(6.dp))
 
                 Text(
-                    text = umkm.rating.toString(),
+                    text = location.rating.toString(),
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
+                    fontSize = 14.sp,
                     modifier = Modifier
                         .padding(top = 4.dp)
                 )
@@ -136,7 +136,7 @@ fun DetailScreen(
                 Text(
                     text = "Baik",
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
+                    fontSize = 14.sp,
                     color = Color.Green
                 )
             }
@@ -170,13 +170,17 @@ fun DetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    val umkm = Umkm(
-        image = R.drawable.dummy_umkm,
-        title = "Restoran Di Inazuma",
-        category = "Kuliner",
-        rating = 4.5
+    val location = Location(
+        address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
+        name = "MargoCity",
+        type = listOf("shopping_mall",
+            "point_of_interest",
+            "establishment"),
+        rating = 7.3,
+        GMapsID = "abcd1234"
     )
+
     EmpowerUTheme {
-        DetailScreen(umkm = umkm, navController = rememberNavController())
+        DetailScreen(location, navController = rememberNavController())
     }
 }
