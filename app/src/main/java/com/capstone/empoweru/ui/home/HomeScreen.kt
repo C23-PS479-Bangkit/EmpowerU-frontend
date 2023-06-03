@@ -45,6 +45,11 @@ fun HomeScreen(
     val locations = homeScreenViewModel.locations.value
     val isLoading = homeScreenViewModel.isLoading.value
 
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredLocations = locations.filter { location ->
+        location.name.contains(searchQuery, ignoreCase = true)
+    }
+
     LaunchedEffect(Unit) {
         homeScreenViewModel.fetchLocations()
     }
@@ -78,7 +83,10 @@ fun HomeScreen(
                 padding(top = 8.dp)
             )
             SearchBar(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp),
+                onSearch = { query -> searchQuery = query }
             )
             CategoryRow(
                 modifier = Modifier
@@ -86,11 +94,12 @@ fun HomeScreen(
             UmkmList(
                 modifier = Modifier,
                 onItemClick = { location ->
+                    homeScreenViewModel.selectLocation(location)
                     navController.navigate("${Screen.Detail.route}/${location.name}") {
                         launchSingleTop = true
                     }
                 },
-                locations = locations,
+                locations = filteredLocations,
                 isLoading = isLoading
             )
         }

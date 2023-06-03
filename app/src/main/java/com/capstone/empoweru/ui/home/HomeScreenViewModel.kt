@@ -21,6 +21,13 @@ class HomeScreenViewModel(
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
+    private val _selectedLocation = mutableStateOf<Location?>(null)
+    val selectedLocation: State<Location?> = _selectedLocation
+
+    fun selectLocation(location: Location) {
+        _selectedLocation.value = location
+    }
+
     fun getUsername(): String {
         return userPreferences.username ?: ""
     }

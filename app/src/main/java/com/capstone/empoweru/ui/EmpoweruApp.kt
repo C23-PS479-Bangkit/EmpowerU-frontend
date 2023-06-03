@@ -85,13 +85,19 @@ fun EmpoweruApp(
                 ) { backStackEntry ->
                     val arguments = requireNotNull(backStackEntry.arguments)
                     val name = arguments.getString("name")
-                    val location = locations.find { it.name == name }
+                    val selectedLocation = homeScreenViewModel.selectedLocation.value
+                    val location = if (selectedLocation?.name == name) {
+                        selectedLocation
+                    } else {
+                        locations.find { it.name == name }
+                    }
                     if (location != null) {
                         DetailScreen(location, navController)
                     } else {
                         // Handle the case where the location is not found
                     }
                 }
+
 
                 composable(Screen.Profile.route) {
                     Scaffold(
