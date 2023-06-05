@@ -71,9 +71,9 @@ fun CommentCard(
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = "Rating",
-                            tint = Color.Yellow,
+                            tint = Color(0xFFFFCC00),
                             modifier = Modifier
-                                .size(16.dp)
+                                .size(20.dp)
                         )
 
                         Spacer(modifier = Modifier.width(4.dp))
@@ -81,7 +81,9 @@ fun CommentCard(
                         Text(
                             text = comment.rating.toString(),
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 14.sp
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
                         )
                     }
                 }

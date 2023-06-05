@@ -40,10 +40,11 @@ fun ProfileScreen(
     modifier: Modifier = Modifier
 ) {
     val profilePicture = painterResource(R.drawable.profile_dummy)
-    val review = 28
+    val review = 4
 
     val context = LocalContext.current
     val username = viewModel.userPreferences.username ?: ""
+    val id = viewModel.userPreferences.id ?: ""
 
     Box(
         modifier = Modifier

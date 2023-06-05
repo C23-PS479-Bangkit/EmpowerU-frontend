@@ -78,8 +78,9 @@ class LoginRepository(
         }
     }
 
-    fun saveUserData(username: String?, email: String?) {
+    fun saveUserData(id: String?, username: String?, email: String?) {
         userPreferences.apply {
+            this.id = id
             this.username = username
             this.email = email
         }

@@ -109,14 +109,14 @@ fun DetailScreen(
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Rating:",
-                    tint = Color.Yellow,
+                    tint = Color(0xFFFFCC00),
                     modifier = Modifier.size(24.dp)
                 )
 
                 Spacer(modifier = Modifier.width(6.dp))
 
                 Text(
-                    text = location.rating.toString(),
+                    text = String.format("%.1f", location.rating),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
                     modifier = Modifier

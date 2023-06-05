@@ -15,6 +15,7 @@ class ProfileViewModel(
         userPreferences.isLoggedIn = false
         userPreferences.username = null
         userPreferences.email = null
+        userPreferences.id = null
 
         // Navigate to LoginActivity
         val intent = Intent(context, LoginActivity::class.java)

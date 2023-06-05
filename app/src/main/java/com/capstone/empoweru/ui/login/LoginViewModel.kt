@@ -38,7 +38,7 @@ class LoginViewModel(
                     val username = userDataResponse?.username
                     val email = userDataResponse?.email
 
-                    repository.saveUserData(username, email)
+                    repository.saveUserData(id, username, email)
                     repository.saveLoginStatus(true)
 
                     _loginResult.value = LoginResult(success = true)

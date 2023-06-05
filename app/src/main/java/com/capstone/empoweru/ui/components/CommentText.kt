@@ -20,15 +20,17 @@ import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
 @Composable
 fun CommentText(
+    query: String,
+    onQueryChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
-            .border(1.dp, Color.Black, shape = RoundedCornerShape(8.dp))
+            .border(1.dp, Color.LightGray, shape = RoundedCornerShape(8.dp))
     ) {
         TextField(
-            value = "",
-            onValueChange = { /* TODO: Handle text change */ },
+            value = query,
+            onValueChange = onQueryChanged,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 6.dp, vertical = 4.dp),
@@ -58,6 +60,9 @@ fun CommentText(
 @Composable
 fun CommentTextPreview() {
     EmpowerUTheme {
-        CommentText()
+        CommentText(
+            query = "Rapli",
+            onQueryChanged = {}
+        )
     }
 }

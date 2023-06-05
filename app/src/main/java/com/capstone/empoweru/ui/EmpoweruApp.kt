@@ -20,7 +20,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.capstone.empoweru.data.dummy.dummyUmkm
 import com.capstone.empoweru.data.remote.ApiConfig
 import com.capstone.empoweru.data.repository.LocationRepository
 import com.capstone.empoweru.data.response.Location
@@ -189,6 +188,7 @@ private fun BottomBar(
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun EmpoweruAppPreview() {

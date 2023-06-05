@@ -84,7 +84,7 @@ fun UmkmCard(
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = "Rating",
-                        tint = Color.Yellow,
+                        tint = Color(0xFFFFCC00),
                         modifier = Modifier
                             .size(20.dp)
                     )
@@ -94,7 +94,9 @@ fun UmkmCard(
                     Text(
                         text = String.format("%.1f", location.rating),
                         fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp
+                        fontSize = 14.sp,
+                        modifier = Modifier
+                            .padding(top = 4.dp)
                     )
                 }
             }

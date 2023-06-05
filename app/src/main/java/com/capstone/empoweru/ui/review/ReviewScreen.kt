@@ -1,5 +1,9 @@
 package com.capstone.empoweru.ui.review
 
+import android.net.Uri
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -11,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,13 +31,29 @@ import com.capstone.empoweru.ui.components.navigation.AddButton
 import com.capstone.empoweru.ui.components.navigation.CancelButton
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
+
 @Composable
 fun ReviewScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     var selectedRating by remember { mutableStateOf<Rating?>(null) }
-    var isImageSelected by remember { mutableStateOf(false) }
+    var commentQuery by remember { mutableStateOf("") }
+
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+
+    val openGalleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { result ->
+            if (result != null) {
+                selectedImageUri = result
+            }
+        }
+    )
+
+    fun openGallery() {
+        openGalleryLauncher.launch("image/*")
+    }
 
     Column(
         modifier = Modifier
@@ -59,7 +80,7 @@ fun ReviewScreen(
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Star",
-                    tint = if (rating in ratings.subList(0, ratings.indexOf(selectedRating) + 1)) Color.Yellow else Color.LightGray,
+                    tint = if (rating in ratings.subList(0, ratings.indexOf(selectedRating) + 1)) Color(0xFFFFCC00) else Color.LightGray,
                     modifier = Modifier
                         .size(48.dp)
                         .clickable {
@@ -87,12 +108,14 @@ fun ReviewScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         ImageButton(
-            onClick = { /*TODO*/ },
+            onClick = { openGallery() },
+            selectedImageUri = selectedImageUri,
+            onImageSelected = { uri -> selectedImageUri = uri },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
         )
-        
+
         Spacer(modifier = Modifier.height(18.dp))
 
         Box(
@@ -100,7 +123,10 @@ fun ReviewScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            CommentText()
+            CommentText(
+                query = commentQuery,
+                onQueryChanged = { commentQuery = it }
+            )
         }
 
         Spacer(modifier = Modifier.height(18.dp))
