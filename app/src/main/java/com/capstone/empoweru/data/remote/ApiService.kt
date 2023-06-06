@@ -1,9 +1,6 @@
 package com.capstone.empoweru.data.remote
 
-import com.capstone.empoweru.data.request.CreateLocationRequest
-import com.capstone.empoweru.data.request.LoginRequest
-import com.capstone.empoweru.data.request.RegisterRequest
-import com.capstone.empoweru.data.request.UserDataRequest
+import com.capstone.empoweru.data.request.*
 import com.capstone.empoweru.data.response.*
 import retrofit2.Response
 import retrofit2.http.Body
@@ -26,4 +23,10 @@ interface ApiService {
 
     @GET("get_list_location")
     suspend fun getListOfLocations(): Response<LocationResponse>
+
+    @POST("create_comment")
+    suspend fun createComment(@Body request: CommentRequest): CommentResponse
+
+    @GET("get_list_comment")
+    suspend fun getListOfComments(@Query("GMapsID") gmapsId: String): Response<CommentListResponse>
 }

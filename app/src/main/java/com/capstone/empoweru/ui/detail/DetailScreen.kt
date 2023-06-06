@@ -10,6 +10,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,12 +21,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.capstone.empoweru.data.dummy.Umkm
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.R
 import com.capstone.empoweru.data.dummy.generateDummyComments
+import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CommentCard
 import com.capstone.empoweru.ui.components.navigation.Screen
@@ -36,7 +41,14 @@ fun DetailScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val comment = generateDummyComments()
+    val viewModel: DetailScreenViewModel = viewModel(
+        factory = DetailScreenViewModelFactory(
+            ListCommentRepository(),
+            location.GMapsID
+        )
+    )
+
+    val comments by viewModel.comments.collectAsState(emptyList())
 
     Scaffold(
         floatingActionButton = {
@@ -59,7 +71,7 @@ fun DetailScreen(
                 .fillMaxSize()
         ) {
             Image(
-                painter = painterResource(R.drawable.dummy_umkm),
+                painter = rememberImagePainter(location.urlPhoto),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Umkm Image",
                 modifier = Modifier
@@ -134,7 +146,7 @@ fun DetailScreen(
                 Spacer(modifier = Modifier.width(6.dp))
 
                 Text(
-                    text = "Baik",
+                    text = location.impression,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
                     color = Color.Green
@@ -156,9 +168,9 @@ fun DetailScreen(
             Spacer(modifier = Modifier.height(6.dp))
 
             LazyColumn(
-                modifier = Modifier.padding(bottom = 24.dp, start = 18.dp, end = 18.dp)
+                modifier = Modifier.padding(horizontal = 18.dp)
             ) {
-                items(comment) { comment ->
+                items(comments  ) { comment ->
                     CommentCard(comment = comment)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
@@ -173,11 +185,11 @@ fun DetailScreenPreview() {
     val location = Location(
         address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
         name = "MargoCity",
-        type = listOf("shopping_mall",
-            "point_of_interest",
-            "establishment"),
+        type = "Restoran",
         rating = 7.3,
-        GMapsID = "abcd1234"
+        GMapsID = "abcd1234",
+        impression = "Netral",
+        urlPhoto = "dummy_umkm"
     )
 
     EmpowerUTheme {

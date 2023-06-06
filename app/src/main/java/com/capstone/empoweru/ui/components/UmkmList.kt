@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.capstone.empoweru.data.dummy.Umkm
 import com.capstone.empoweru.R
 import com.capstone.empoweru.data.response.Location
@@ -45,6 +46,10 @@ fun UmkmCard(
                 .padding(16.dp)
         ) {
             Image(
+                // Get the Image from the API
+                /*painter = rememberImagePainter(location.urlPhoto),*/
+
+                // Default Image
                 painter = painterResource(R.drawable.dummy_umkm),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Gambar UMKM",
@@ -67,7 +72,7 @@ fun UmkmCard(
                 )
 
                 Text(
-                    text = location.type.take(2).joinToString(", "),
+                    text = location.type,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,
                     maxLines = 1,
@@ -96,7 +101,7 @@ fun UmkmCard(
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
                         modifier = Modifier
-                            .padding(top = 4.dp)
+                            .padding(top = 6.dp)
                     )
                 }
             }
@@ -110,11 +115,11 @@ fun UmkmCardPreview() {
     val location = Location(
         address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
         name = "MargoCity",
-        type = listOf("shopping_mall",
-            "point_of_interest",
-            "establishment"),
+        type = "Restoran",
         rating = 7.3,
-        GMapsID = "abcd1234"
+        GMapsID = "abcd1234",
+        impression = "Netral",
+        urlPhoto = "dummy_uri_photo"
     )
     
     EmpowerUTheme() {

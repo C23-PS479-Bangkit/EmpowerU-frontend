@@ -21,22 +21,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.capstone.empoweru.data.dummy.Rating
 import com.capstone.empoweru.data.dummy.ratings
+import com.capstone.empoweru.data.repository.ListCommentRepository
+import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CommentText
 import com.capstone.empoweru.ui.components.ImageButton
 import com.capstone.empoweru.ui.components.navigation.AddButton
 import com.capstone.empoweru.ui.components.navigation.CancelButton
+import com.capstone.empoweru.ui.detail.DetailScreenViewModel
+import com.capstone.empoweru.ui.detail.DetailScreenViewModelFactory
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
-
 
 @Composable
 fun ReviewScreen(
     navController: NavHostController,
+    location: Location,
     modifier: Modifier = Modifier
 ) {
+    val viewModel: ReviewScreenViewModel = viewModel(
+        factory = ReviewScreenViewModelFactory(LocalContext.current))
+
     var selectedRating by remember { mutableStateOf<Rating?>(null) }
     var commentQuery by remember { mutableStateOf("") }
 
@@ -62,7 +70,7 @@ fun ReviewScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Tambah Komentar",
+            text = location.name,
             style = MaterialTheme.typography.h1,
             fontSize = 16.sp,
             modifier = Modifier
@@ -141,7 +149,15 @@ fun ReviewScreen(
             )
             Spacer(modifier = Modifier.width(16.dp))
             AddButton(
-                onClick = { /* TODO: Handle add button click */ },
+                onClick = {
+                    viewModel.addComment(location, selectedRating, commentQuery) { success ->
+                        if (success) {
+                            navController.popBackStack()
+                        } else {
+
+                        }
+                    }
+                },
                 modifier = Modifier.weight(1f)
             )
         }
@@ -151,7 +167,20 @@ fun ReviewScreen(
 @Preview(showBackground = true)
 @Composable
 fun ReviewScreenPreview() {
+    val location = Location(
+        address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
+        name = "MargoCity",
+        type = "Restoran",
+        rating = 7.3,
+        GMapsID = "abcd1234",
+        impression = "Netral",
+        urlPhoto = "dummy_umkm"
+    )
+
     EmpowerUTheme {
-        ReviewScreen(navController = rememberNavController())
+        ReviewScreen(
+            navController = rememberNavController(),
+            location = location
+        )
     }
 }

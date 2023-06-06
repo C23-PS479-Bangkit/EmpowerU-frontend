@@ -22,10 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.capstone.empoweru.data.dummy.Comment
 import com.capstone.empoweru.R
+import com.capstone.empoweru.data.response.CommentList
+import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
 @Composable
 fun CommentCard(
-    comment: Comment,
+    comment: CommentList,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -34,12 +36,12 @@ fun CommentCard(
         elevation = 4.dp
     ) {
         Row(
-            verticalAlignment = Alignment.Top,
-            modifier = Modifier.padding(12.dp)
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(14.dp)
         ) {
             // Profile image
             Image(
-                painter = painterResource(id = comment.profileImage),
+                painter = painterResource(R.drawable.profile_dummy),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Profile Image",
                 modifier = Modifier
@@ -47,7 +49,7 @@ fun CommentCard(
                     .clip(RoundedCornerShape(24.dp))
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(20.dp))
 
             Column(
                 modifier = Modifier.weight(1f)
@@ -79,7 +81,7 @@ fun CommentCard(
                         Spacer(modifier = Modifier.width(4.dp))
 
                         Text(
-                            text = comment.rating.toString(),
+                            text = comment.starRating.toString(),
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 14.sp,
                             modifier = Modifier
@@ -88,14 +90,22 @@ fun CommentCard(
                     }
                 }
 
-                // Comment text or image
-                if (comment.image != null) {
+                Text(
+                    text = comment.comment,
+                    style = MaterialTheme.typography.body2,
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+
+                // Image Placeholder
+                /*if (comment.image != null) {
                     Text(
                         text = comment.text,
                         style = MaterialTheme.typography.body2,
                         fontSize = 14.sp
                     )
-                    
+
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Image(
@@ -109,27 +119,24 @@ fun CommentCard(
 
                     Spacer(modifier = Modifier.height(4.dp))
 
-                } else {
-                    Text(
-                        text = comment.text,
-                        style = MaterialTheme.typography.body2,
-                        fontSize = 14.sp
-                    )
-                }
+                } else {*/
+
             }
         }
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun CommentCardPreview() {
-    val comment = Comment(
+    val comment = CommentList(
         username = "User1",
-        profileImage = R.drawable.profile_dummy,
-        text = "This place is amazing!",
-        image = R.drawable.dummy_umkm,
-        rating = 4.5f
+        starRating = 4.5,
+        comment = "Makanannya sangat enak!"
     )
-    CommentCard(comment = comment)
+
+    EmpowerUTheme() {
+        CommentCard(comment = comment)
+    }
 }

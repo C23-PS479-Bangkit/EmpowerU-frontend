@@ -8,7 +8,9 @@ data class LocationResponse(
 data class Location(
     val address: String,
     val name: String,
-    val type: List<String>,
+    val type: String,
     val rating: Double,
-    val GMapsID: String
+    val GMapsID: String,
+    val impression: String,
+    val urlPhoto: String
 )

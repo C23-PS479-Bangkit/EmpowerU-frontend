@@ -109,8 +109,11 @@ fun EmpoweruApp(
                     }
                 }
 
-                composable(Screen.Review.route) { // Add the Review composable
-                    ReviewScreen(navController)
+                composable(Screen.Review.route) {
+                    val location = homeScreenViewModel.selectedLocation.value
+                    if (location != null) {
+                        ReviewScreen(navController, location)
+                    }
                 }
 
                 composable(Screen.AddPlaces.route) {
@@ -196,11 +199,11 @@ fun EmpoweruAppPreview() {
     val location = Location(
         address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
         name = "MargoCity",
-        type = listOf("shopping_mall",
-            "point_of_interest",
-            "establishment"),
+        type = "Restoran",
         rating = 7.3,
-        GMapsID = "abcd1234"
+        GMapsID = "abcd1234",
+        impression = "Netral",
+        urlPhoto = "dummy_url"
     )
 
     EmpoweruApp(
