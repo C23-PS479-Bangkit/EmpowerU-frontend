@@ -15,10 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.capstone.empoweru.R
 import com.capstone.empoweru.data.dummy.CategoryItem
 import com.capstone.empoweru.data.dummy.getCategory
 import com.capstone.empoweru.data.remote.ApiConfig
@@ -63,9 +65,11 @@ fun HomeScreen(
                     .padding(bottom = 52.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    painter = painterResource(R.drawable.ic_add_location),
                     contentDescription = "Add",
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(24.dp)
                 )
             }
         },

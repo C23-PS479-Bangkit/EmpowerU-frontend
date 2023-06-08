@@ -39,7 +39,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel,
     modifier: Modifier = Modifier
 ) {
-    val profilePicture = painterResource(R.drawable.profile_dummy)
+    val profilePicture = painterResource(R.drawable.example_profile)
     val review = 4
 
     val context = LocalContext.current

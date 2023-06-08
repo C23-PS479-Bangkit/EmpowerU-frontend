@@ -50,7 +50,7 @@ fun UmkmCard(
                 /*painter = rememberImagePainter(location.urlPhoto),*/
 
                 // Default Image
-                painter = painterResource(R.drawable.dummy_umkm),
+                painter = painterResource(R.drawable.example_umkm),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Gambar UMKM",
                 modifier = Modifier

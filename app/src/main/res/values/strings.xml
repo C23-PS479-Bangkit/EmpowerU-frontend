@@ -18,4 +18,6 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="search_UMKM">Cari UMKM</string>
+
+    <string name="empoweru_desc">Empowering UMKMs through the power of community</string>
 </resources>

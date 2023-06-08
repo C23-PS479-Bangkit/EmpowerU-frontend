@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import com.capstone.empoweru.data.dummy.Comment
 import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.response.CommentList
+import com.capstone.empoweru.utils.CommentEvent
+import com.capstone.empoweru.utils.CommentEventBus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -18,6 +20,14 @@ class DetailScreenViewModel(
 
     init {
         fetchComments()
+
+        viewModelScope.launch {
+            CommentEventBus.commentEventFlow.collect { event ->
+                if (event is CommentEvent.CommentAdded) {
+                    fetchComments()
+                }
+            }
+        }
     }
 
     private fun fetchComments() {

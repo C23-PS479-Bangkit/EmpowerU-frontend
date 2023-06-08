@@ -10,6 +10,8 @@ import com.capstone.empoweru.data.remote.ApiConfig.apiService
 import com.capstone.empoweru.data.repository.CommentRepository
 import com.capstone.empoweru.data.request.CommentRequest
 import com.capstone.empoweru.data.response.Location
+import com.capstone.empoweru.utils.CommentEvent
+import com.capstone.empoweru.utils.CommentEventBus
 import com.capstone.empoweru.utils.UserPreferences
 import kotlinx.coroutines.launch
 
@@ -33,6 +35,8 @@ class ReviewScreenViewModel(
             try {
                 val request = CommentRequest(location.GMapsID, userID, rating.value, comment)
                 val response = commentRepository.createComment(request)
+
+                CommentEventBus.postEvent(CommentEvent.CommentAdded)
 
                 Toast.makeText(context, "Komentarmu berhasil ditambahkan!", Toast.LENGTH_SHORT).show()
                 callback(true)

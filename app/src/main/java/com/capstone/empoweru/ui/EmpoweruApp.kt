@@ -80,7 +80,7 @@ fun EmpoweruApp(
 
                 composable(
                     route = "${Screen.Detail.route}/{name}",
-                    arguments = listOf(navArgument("name") { type = NavType.StringType })
+                    arguments = listOf(navArgument("name") { type = NavType.StringType }),
                 ) { backStackEntry ->
                     val arguments = requireNotNull(backStackEntry.arguments)
                     val name = arguments.getString("name")

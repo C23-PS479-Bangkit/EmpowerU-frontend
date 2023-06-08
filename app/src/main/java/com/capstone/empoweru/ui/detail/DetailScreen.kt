@@ -48,7 +48,7 @@ fun DetailScreen(
         )
     )
 
-    val comments by viewModel.comments.collectAsState(emptyList())
+    val comments by viewModel.comments.collectAsState()
 
     Scaffold(
         floatingActionButton = {
@@ -57,9 +57,11 @@ fun DetailScreen(
                 backgroundColor = Color.Red
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    painter = painterResource(R.drawable.ic_add_comment),
                     contentDescription = "Add",
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier
+                        .size(18.dp)
                 )
             }
         },
@@ -71,7 +73,9 @@ fun DetailScreen(
                 .fillMaxSize()
         ) {
             Image(
-                painter = rememberImagePainter(location.urlPhoto),
+                // Image fetched from API
+                /*painter = rememberImagePainter(location.urlPhoto),*/
+                painter = painterResource(R.drawable.example_umkm),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Umkm Image",
                 modifier = Modifier
@@ -149,7 +153,11 @@ fun DetailScreen(
                     text = location.impression,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
-                    color = Color.Green
+                    color = when (location.impression) {
+                        "Netral" -> Color.Gray
+                        "Baik" -> Color.Green
+                        else -> Color.Red
+                    }
                 )
             }
 

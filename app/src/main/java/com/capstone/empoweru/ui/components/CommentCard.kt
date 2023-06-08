@@ -41,7 +41,7 @@ fun CommentCard(
         ) {
             // Profile image
             Image(
-                painter = painterResource(R.drawable.profile_dummy),
+                painter = painterResource(R.drawable.example_profile),
                 contentScale = ContentScale.Crop,
                 contentDescription = "Profile Image",
                 modifier = Modifier

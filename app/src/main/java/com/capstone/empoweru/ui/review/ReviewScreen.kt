@@ -32,6 +32,7 @@ import com.capstone.empoweru.ui.components.CommentText
 import com.capstone.empoweru.ui.components.ImageButton
 import com.capstone.empoweru.ui.components.navigation.AddButton
 import com.capstone.empoweru.ui.components.navigation.CancelButton
+import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.detail.DetailScreenViewModel
 import com.capstone.empoweru.ui.detail.DetailScreenViewModelFactory
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
@@ -152,7 +153,12 @@ fun ReviewScreen(
                 onClick = {
                     viewModel.addComment(location, selectedRating, commentQuery) { success ->
                         if (success) {
-                            navController.popBackStack()
+                            val name = location.name
+                            navController.popBackStack(Screen.Detail.route, inclusive = false)
+                            navController.navigate("${Screen.Detail.route}/$name") {
+                                popUpTo(navController.graph.startDestinationId)
+                                launchSingleTop = true
+                            }
                         } else {
 
                         }

@@ -11,6 +11,8 @@ import com.capstone.empoweru.databinding.ActivitySplashBinding
 import com.capstone.empoweru.ui.MainActivity
 import com.capstone.empoweru.ui.login.LoginActivity
 import com.capstone.empoweru.utils.UserPreferences
+import android.view.animation.AlphaAnimation
+
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -27,9 +29,10 @@ class SplashActivity : AppCompatActivity() {
         val viewModelFactory = SplashViewModelFactory(userPreferences)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SplashViewModel::class.java)
 
-        // Show the image and progress button
-        binding.imageSplash.visibility = View.VISIBLE
-        binding.progressBar.visibility = View.VISIBLE
+        val fadeInAnimation = AlphaAnimation(0f, 1f)
+        fadeInAnimation.duration = 1000
+        binding.tvAppDesc.startAnimation(fadeInAnimation)
+
 
         // Check user login status
         viewModel.checkUserLoginStatus { isLoggedIn ->

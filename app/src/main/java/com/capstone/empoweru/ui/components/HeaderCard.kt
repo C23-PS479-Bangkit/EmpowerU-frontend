@@ -50,7 +50,7 @@ fun HeaderCard(
                 onClick = { }
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.profile_dummy),
+                    painter = painterResource(id = R.drawable.example_profile),
                     contentDescription = "Profile Picture",
                     modifier = Modifier
                         .size(60.dp)
@@ -67,6 +67,6 @@ fun HeaderCard(
 @Composable
 fun HeaderCardPreview() {
     EmpowerUTheme {
-        HeaderCard("Pom-Pom")
+        HeaderCard("User1")
     }
 }
