@@ -93,6 +93,7 @@ fun HomeScreen(
                 onSearch = { query -> searchQuery = query }
             )
             CategoryRow(
+                homeScreenViewModel,
                 modifier = Modifier
             )
             UmkmList(
@@ -112,10 +113,10 @@ fun HomeScreen(
 
 @Composable
 fun CategoryRow(
+    homeScreenViewModel: HomeScreenViewModel,
     modifier: Modifier = Modifier
 ) {
     val categoryList = getCategory()
-    var selectedCategory by remember { mutableStateOf<CategoryItem?>(null) }
 
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp)
@@ -123,14 +124,16 @@ fun CategoryRow(
         items(categoryList) { category ->
             CategoryButton(
                 category = category,
-                selectedCategory = selectedCategory,
+                selectedCategory = homeScreenViewModel.selectedCategory.value,
                 onCategorySelected = { newCategory ->
-                    selectedCategory = newCategory
+                    homeScreenViewModel.selectCategory(newCategory)
+                    homeScreenViewModel.fetchLocations()
                 }
             )
         }
     }
 }
+
 
 @Composable
 fun UmkmList(

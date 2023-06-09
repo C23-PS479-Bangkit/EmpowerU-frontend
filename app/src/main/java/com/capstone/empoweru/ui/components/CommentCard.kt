@@ -32,11 +32,12 @@ fun CommentCard(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth(),
-        elevation = 4.dp
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        elevation = 2.dp
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.Top,
             modifier = Modifier.padding(14.dp)
         ) {
             // Profile image
@@ -45,6 +46,7 @@ fun CommentCard(
                 contentScale = ContentScale.Crop,
                 contentDescription = "Profile Image",
                 modifier = Modifier
+                    .padding(4.dp)
                     .size(48.dp)
                     .clip(RoundedCornerShape(24.dp))
             )

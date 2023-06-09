@@ -1,7 +1,9 @@
 package com.capstone.empoweru.ui.detail
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,7 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +39,7 @@ import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CommentCard
 import com.capstone.empoweru.ui.components.navigation.Screen
 
+@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen(
@@ -49,6 +55,8 @@ fun DetailScreen(
     )
 
     val comments by viewModel.comments.collectAsState()
+
+    val commentCount = comments.size
 
     Scaffold(
         floatingActionButton = {
@@ -68,124 +76,138 @@ fun DetailScreen(
         floatingActionButtonPosition = FabPosition.End,
         scaffoldState = rememberScaffoldState(),
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(horizontal = 8.dp)
         ) {
-            Image(
-                // Image fetched from API
-                /*painter = rememberImagePainter(location.urlPhoto),*/
-                painter = painterResource(R.drawable.example_umkm),
-                contentScale = ContentScale.Crop,
-                contentDescription = "Umkm Image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(240.dp)
-            )
-
-            Spacer(modifier = Modifier.height(18.dp))
-
-            Text(
-                text = location.name,
-                style = MaterialTheme.typography.h1,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .padding(horizontal = 18.dp)
-                    .fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = location.address,
-                style = MaterialTheme.typography.body1,
-                fontSize = 14.sp,
-                modifier = Modifier
-                    .padding(horizontal = 18.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 18.dp)
-            ) {
-                Text(
-                    text = "Rating:",
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp
+            item {
+                Image(
+                    // Image fetched from API
+                    /*painter = rememberImagePainter(location.urlPhoto),*/
+                    painter = painterResource(R.drawable.example_umkm),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "Umkm Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(240.dp)
                 )
 
-                Spacer(modifier = Modifier.width(6.dp))
-
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "Rating:",
-                    tint = Color(0xFFFFCC00),
-                    modifier = Modifier.size(24.dp)
-                )
-
-                Spacer(modifier = Modifier.width(6.dp))
+                Spacer(modifier = Modifier.height(18.dp))
 
                 Text(
-                    text = String.format("%.1f", location.rating),
-                    fontWeight = FontWeight.SemiBold,
+                    text = location.name,
+                    style = MaterialTheme.typography.h1,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .padding(horizontal = 18.dp)
+                        .fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = location.address,
+                    style = MaterialTheme.typography.body1,
                     fontSize = 14.sp,
                     modifier = Modifier
-                        .padding(top = 4.dp)
+                        .padding(horizontal = 18.dp)
                 )
 
-                Spacer(modifier = Modifier.width(48.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-                Text(
-                    text = "Impresi:",
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 18.dp)
+                ) {
+                    Text(
+                        text = "Rating:",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp
+                    )
 
-                Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
 
-                Text(
-                    text = location.impression,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp,
-                    color = when (location.impression) {
-                        "Netral" -> Color.Gray
-                        "Baik" -> Color.Green
-                        else -> Color.Red
-                    }
-                )
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Rating:",
+                        tint = Color(0xFFFFCC00),
+                        modifier = Modifier.size(24.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Text(
+                        text = String.format("%.1f", location.rating),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(48.dp))
+
+                    Text(
+                        text = "Impresi:",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp
+                    )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Text(
+                        text = location.impression,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        color = when (location.impression) {
+                            "Netral" -> Color.Gray
+                            "Baik" -> Color.Green
+                            else -> Color.Red
+                        }
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
             }
 
-            Spacer(modifier = Modifier.height(18.dp))
-
-            Text(
-                text = "Komentar",
-                style = MaterialTheme.typography.h1,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .padding(horizontal = 18.dp)
-                    .fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            LazyColumn(
-                modifier = Modifier.padding(horizontal = 18.dp)
-            ) {
-                items(comments  ) { comment ->
-                    CommentCard(comment = comment)
-                    Spacer(modifier = Modifier.height(8.dp))
+            stickyHeader {
+                Box(
+                    modifier = Modifier
+                        .background(Color.White)
+                        .fillMaxSize()
+                ) {
+                    Text(
+                        text = buildAnnotatedString {
+                            append("Komentar ")
+                            withStyle(
+                                style = SpanStyle(
+                                    fontSize = 14.sp
+                                )
+                            ) {
+                                append("($commentCount)")
+                            }
+                        },
+                        style = MaterialTheme.typography.h1,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp, horizontal = 18.dp)
+                    )
                 }
+            }
+
+            items(comments) { comment ->
+                CommentCard(comment = comment)
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

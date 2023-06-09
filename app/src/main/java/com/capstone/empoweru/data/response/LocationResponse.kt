@@ -14,3 +14,4 @@ data class Location(
     val impression: String,
     val urlPhoto: String
 )
+
