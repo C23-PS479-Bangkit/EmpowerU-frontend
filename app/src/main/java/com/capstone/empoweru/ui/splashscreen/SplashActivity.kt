@@ -1,17 +1,17 @@
 package com.capstone.empoweru.ui.splashscreen
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.ActivityOptions
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.view.animation.AlphaAnimation
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.capstone.empoweru.R
 import com.capstone.empoweru.databinding.ActivitySplashBinding
 import com.capstone.empoweru.ui.MainActivity
 import com.capstone.empoweru.ui.login.LoginActivity
 import com.capstone.empoweru.utils.UserPreferences
-import android.view.animation.AlphaAnimation
 
 
 @SuppressLint("CustomSplashScreen")
@@ -26,8 +26,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val userPreferences = UserPreferences.getInstance(this)
-        val viewModelFactory = SplashViewModelFactory(userPreferences)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SplashViewModel::class.java)
+        val viewModelFactory = SplashViewModelFactory(this, userPreferences)
+        viewModel = ViewModelProvider(this, viewModelFactory)[SplashViewModel::class.java]
 
         val fadeInAnimation = AlphaAnimation(0f, 1f)
         fadeInAnimation.duration = 1000
@@ -47,12 +47,18 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
+        val options = ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left)
+        startActivity(
+            Intent(this, MainActivity::class.java), options.toBundle()
+        )
         finish()
     }
 
     private fun navigateToLoginActivity() {
-        startActivity(Intent(this, LoginActivity::class.java))
+        val options = ActivityOptions.makeCustomAnimation(this, R.anim.slide_in_right, R.anim.slide_out_left)
+        startActivity(
+            Intent(this, LoginActivity::class.java), options.toBundle()
+        )
         finish()
     }
 }

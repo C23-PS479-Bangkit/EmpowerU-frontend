@@ -1,7 +1,6 @@
 package com.capstone.empoweru.ui.review
 
 import android.net.Uri
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -26,15 +25,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.capstone.empoweru.data.dummy.Rating
 import com.capstone.empoweru.data.dummy.ratings
-import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CommentText
 import com.capstone.empoweru.ui.components.ImageButton
 import com.capstone.empoweru.ui.components.navigation.AddButton
 import com.capstone.empoweru.ui.components.navigation.CancelButton
 import com.capstone.empoweru.ui.components.navigation.Screen
-import com.capstone.empoweru.ui.detail.DetailScreenViewModel
-import com.capstone.empoweru.ui.detail.DetailScreenViewModelFactory
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
 @Composable

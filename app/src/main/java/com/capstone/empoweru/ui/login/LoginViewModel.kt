@@ -1,6 +1,5 @@
 package com.capstone.empoweru.ui.login
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,21 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.empoweru.data.repository.ApiException
 import com.capstone.empoweru.data.repository.LoginRepository
 import com.capstone.empoweru.data.response.LoginResult
-import com.capstone.empoweru.data.response.UserDataResponse
-import com.capstone.empoweru.utils.UserPreferences
 import kotlinx.coroutines.launch
+import androidx.lifecycle.ViewModelProvider
 
 class LoginViewModel(
-    private val context: Context,
     private val repository: LoginRepository,
-    private val userPreferences: UserPreferences
     ): ViewModel() {
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
-
-    private val _userData = MutableLiveData<UserDataResponse>()
-    val userData: LiveData<UserDataResponse> = _userData
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
@@ -58,6 +51,20 @@ class LoginViewModel(
                     _loginResult.value = LoginResult(success = false, error = "Login failed")
                 }
             }
+        }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+class LoginViewModelFactory(
+    private val repository: LoginRepository,
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return when {
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+                LoginViewModel(repository) as T
+            }
+            else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }
 }

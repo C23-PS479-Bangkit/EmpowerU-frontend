@@ -46,11 +46,15 @@ fun UmkmCard(
                 .padding(16.dp)
         ) {
             Image(
-                // Get the Image from the API
-                /*painter = rememberImagePainter(location.urlPhoto),*/
-
                 // Default Image
-                painter = painterResource(R.drawable.example_umkm),
+                /*painter = painterResource(R.drawable.example_umkm),*/
+
+                // Get the Image from the API
+                painter = if (location.urlPhoto.isNullOrEmpty() || location.urlPhoto == "No Photos") {
+                    painterResource(R.drawable.example_umkm)
+                } else {
+                    rememberImagePainter(location.urlPhoto)
+                },
                 contentScale = ContentScale.Crop,
                 contentDescription = "Gambar UMKM",
                 modifier = Modifier
@@ -119,7 +123,7 @@ fun UmkmCardPreview() {
         rating = 7.3,
         GMapsID = "abcd1234",
         impression = "Netral",
-        urlPhoto = "dummy_uri_photo"
+        urlPhoto = ""
     )
     
     EmpowerUTheme() {

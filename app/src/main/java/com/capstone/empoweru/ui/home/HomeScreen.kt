@@ -24,6 +24,7 @@ import com.capstone.empoweru.R
 import com.capstone.empoweru.data.dummy.CategoryItem
 import com.capstone.empoweru.data.dummy.getCategory
 import com.capstone.empoweru.data.remote.ApiConfig
+import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.repository.LocationRepository
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CategoryButton
@@ -168,8 +169,9 @@ fun HomeScreenPreview() {
         val userPreferences = UserPreferences.getInstance(LocalContext.current)
         val apiService = ApiConfig.apiService
         val locationRepository = LocationRepository(apiService)
+        val listCommentRepository = ListCommentRepository()
 
-        val viewModel = HomeScreenViewModel(userPreferences, locationRepository)
+        val viewModel = HomeScreenViewModel(userPreferences, locationRepository, listCommentRepository)
 
         val navController = rememberNavController()
         HomeScreen(navController = navController, viewModel)

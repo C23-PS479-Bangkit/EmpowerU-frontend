@@ -10,22 +10,22 @@ class LocationRepository(private val apiService: ApiService) {
         val response = apiService.getListOfLocations()
         if (response.isSuccessful) {
             val result = response.body()
-            return result?.listLocation ?: emptyList()
+            /*return result?.listLocation ?: emptyList()*/
 
             // Image uses API_KEY from PLACES_API
-            /*val locations = result?.listLocation ?: emptyList()
+            val locations = result?.listLocation ?: emptyList()
             return locations.map { location ->
                 val imageUrl = addApiKeyToImageUrl(location.urlPhoto)
                 location.copy(urlPhoto = imageUrl)
-            }*/
+            }
         } else {
             throw ApiException("Failed to fetch locations")
         }
     }
 
     // Image uses API_KEY from PLACES_API
-    /*private fun addApiKeyToImageUrl(imageUrl: String): String {
+    private fun addApiKeyToImageUrl(imageUrl: String): String {
         val apiKey = BuildConfig.PLACES_API
         return imageUrl.replace("INSERT_GMAPS_API_KEY", apiKey)
-    }*/
+    }
 }

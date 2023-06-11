@@ -1,6 +1,7 @@
 package com.capstone.empoweru.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -21,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.capstone.empoweru.data.remote.ApiConfig
+import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.repository.LocationRepository
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.addplaces.AddPlaceScreen
@@ -49,8 +51,9 @@ fun EmpoweruApp(
 
     val apiService = ApiConfig.apiService
     val locationRepository = LocationRepository(apiService)
+    val listCommentRepository = ListCommentRepository()
 
-    val homeScreenViewModel = HomeScreenViewModel(userPreferences, locationRepository)
+    val homeScreenViewModel = HomeScreenViewModel(userPreferences, locationRepository, listCommentRepository)
     val profileViewModel = viewModel<ProfileViewModel>(factory = ProfileViewModelFactory(userPreferences))
 
     LaunchedEffect(Unit) {
@@ -196,15 +199,6 @@ private fun BottomBar(
 @Composable
 fun EmpoweruAppPreview() {
     val userPreferences = UserPreferences.getInstance(LocalContext.current)
-    val location = Location(
-        address = "Jl. Margonda Raya No.358, Kemiri Muka, Kecamatan Beji, Kota Depok, Jawa Barat 16423, Indonesia",
-        name = "MargoCity",
-        type = "Restoran",
-        rating = 7.3,
-        GMapsID = "abcd1234",
-        impression = "Netral",
-        urlPhoto = "dummy_url"
-    )
 
     EmpoweruApp(
         userPreferences = userPreferences,

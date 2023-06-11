@@ -79,13 +79,18 @@ fun DetailScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 8.dp)
         ) {
             item {
                 Image(
+                    // Default Image
+                    /*painter = painterResource(R.drawable.example_umkm),*/
+
                     // Image fetched from API
-                    /*painter = rememberImagePainter(location.urlPhoto),*/
-                    painter = painterResource(R.drawable.example_umkm),
+                    painter = if (location.urlPhoto.isNullOrEmpty() || location.urlPhoto == "No Photos") {
+                        painterResource(R.drawable.example_umkm)
+                    } else {
+                        rememberImagePainter(location.urlPhoto)
+                    },
                     contentScale = ContentScale.Crop,
                     contentDescription = "Umkm Image",
                     modifier = Modifier
@@ -100,6 +105,7 @@ fun DetailScreen(
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
+                    maxLines = 1,
                     modifier = Modifier
                         .padding(horizontal = 18.dp)
                         .fillMaxWidth()

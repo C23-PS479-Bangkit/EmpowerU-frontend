@@ -22,7 +22,6 @@ class RegisterViewModel(): ViewModel() {
                 val response = repository.register(username, password, email)
                 registerResponse.value = response
             } catch (e: ApiException) {
-                // Handle Exception
                 errorMessage = e.message
                 registerResponse.value = null
             }

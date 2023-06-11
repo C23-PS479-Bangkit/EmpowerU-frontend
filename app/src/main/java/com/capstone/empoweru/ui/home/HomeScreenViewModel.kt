@@ -6,14 +6,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.empoweru.data.dummy.CategoryItem
+import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.repository.LocationRepository
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.utils.UserPreferences
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 class HomeScreenViewModel(
     private val userPreferences: UserPreferences,
-    private val locationRepository: LocationRepository
+    private val locationRepository: LocationRepository,
+    private val listCommentRepository: ListCommentRepository
 ) : ViewModel() {
 
     private val _locations = mutableStateOf<List<Location>>(emptyList())
@@ -45,8 +49,16 @@ class HomeScreenViewModel(
             _isLoading.value = true
             try {
                 val allLocations = locationRepository.getListOfLocations()
+
+                // Fetch comments for each location
+                val commentsMap = mutableMapOf<String, Int>()
+                allLocations.forEach { location ->
+                    val comments = listCommentRepository.getListOfComments(location.GMapsID)
+                    commentsMap[location.GMapsID] = comments.size
+                }
+
                 val filteredLocations = when (selectedCategory.value) {
-                    CategoryItem.TRENDING -> allLocations.sortedByDescending { it.rating }
+                    CategoryItem.TRENDING -> allLocations.sortedByDescending { commentsMap[it.GMapsID] }
                     CategoryItem.FASHION -> allLocations.filter { it.type == "fashion" }
                     CategoryItem.FOOD -> allLocations.filter { it.type == "restaurant" || it.type == "food" }
                     CategoryItem.SHOP -> allLocations.filter { it.type == "store" }
@@ -57,8 +69,14 @@ class HomeScreenViewModel(
                     else -> allLocations
                 }
                 _locations.value = filteredLocations
+            } catch (e: IOException) {
+                _locations.value = emptyList()
+                _isLoading.value = false
+            } catch (e: HttpException) {
+                _locations.value = emptyList()
+                _isLoading.value = false
             } catch (e: Exception) {
-                // Handle the exception, e.g., show an error message
+                _locations.value = emptyList()
             } finally {
                 _isLoading.value = false
             }
