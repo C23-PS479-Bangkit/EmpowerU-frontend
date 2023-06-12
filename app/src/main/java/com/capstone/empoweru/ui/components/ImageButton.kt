@@ -75,6 +75,14 @@ fun ImageButton(
                         fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Center
                     )
+
+                    Text(
+                        text = "Maksimal 1MB",
+                        style = MaterialTheme.typography.body1,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
         }

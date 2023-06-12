@@ -1,6 +1,11 @@
 package com.capstone.empoweru.ui.review
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Base64
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -32,11 +37,14 @@ import com.capstone.empoweru.ui.components.navigation.AddButton
 import com.capstone.empoweru.ui.components.navigation.CancelButton
 import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 @Composable
 fun ReviewScreen(
     navController: NavHostController,
     location: Location,
+    context: Context,
     modifier: Modifier = Modifier
 ) {
     val viewModel: ReviewScreenViewModel = viewModel(
@@ -118,7 +126,7 @@ fun ReviewScreen(
             onImageSelected = { uri -> selectedImageUri = uri },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp)
+                .height(240.dp)
         )
 
         Spacer(modifier = Modifier.height(18.dp))
@@ -147,7 +155,9 @@ fun ReviewScreen(
             Spacer(modifier = Modifier.width(16.dp))
             AddButton(
                 onClick = {
-                    viewModel.addComment(location, selectedRating, commentQuery) { success ->
+                    val imageBase64 = selectedImageUri?.compressAndEncodeToBase64(context)
+                    Log.d("ReviewScreen", "Base64 Image: $imageBase64")
+                    viewModel.addComment(location, selectedRating, commentQuery, imageBase64) { success ->
                         if (success) {
                             val name = location.name
                             navController.popBackStack(Screen.Detail.route, inclusive = false)
@@ -180,9 +190,57 @@ fun ReviewScreenPreview() {
     )
 
     EmpowerUTheme {
+        val context = LocalContext.current
         ReviewScreen(
             navController = rememberNavController(),
-            location = location
+            location = location,
+            context = context
         )
     }
 }
+fun Uri.compressAndEncodeToBase64(context: Context): String? {
+    try {
+        val inputStream = context.contentResolver.openInputStream(this)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        inputStream?.close()
+
+        val compressedBitmap = compressBitmap(bitmap)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        compressedBitmap?.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        byteArrayOutputStream.close()
+
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+    return null
+}
+
+fun compressBitmap(bitmap: Bitmap?): Bitmap? {
+    val maxWidth = 1024
+    val maxHeight = 1024
+
+    val width = bitmap?.width ?: 0
+    val height = bitmap?.height ?: 0
+
+    if (width <= maxWidth && height <= maxHeight) {
+        return bitmap
+    }
+
+    val aspectRatio = width.toFloat() / height.toFloat()
+    val targetWidth: Int
+    val targetHeight: Int
+
+    if (aspectRatio > 1) {
+        targetWidth = maxWidth
+        targetHeight = (maxWidth / aspectRatio).toInt()
+    } else {
+        targetHeight = maxHeight
+        targetWidth = (maxHeight * aspectRatio).toInt()
+    }
+
+    return bitmap?.let { Bitmap.createScaledBitmap(it, targetWidth, targetHeight, true) }
+}
+

@@ -1,5 +1,6 @@
 package com.capstone.empoweru.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,11 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.capstone.empoweru.data.dummy.Comment
 import com.capstone.empoweru.R
 import com.capstone.empoweru.data.response.CommentList
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun CommentCard(
     comment: CommentList,
@@ -57,20 +61,38 @@ fun CommentCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Top
                 ) {
-                    // Username
-                    Text(
-                        text = comment.username,
-                        style = MaterialTheme.typography.body1,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        modifier = Modifier.weight(1f)
-                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                    ) {
+                        // Username
+                        Text(
+                            text = comment.username,
+                            style = MaterialTheme.typography.body1,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 2.dp)
+                        )
+
+                        Text(
+                            text = comment.comment,
+                            style = MaterialTheme.typography.body2,
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                    }
+                    
+                    Spacer(modifier = Modifier.width(8.dp))
 
                     // Rating
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
                             imageVector = Icons.Default.Star,
@@ -92,37 +114,21 @@ fun CommentCard(
                     }
                 }
 
-                Text(
-                    text = comment.comment,
-                    style = MaterialTheme.typography.body2,
-                    fontSize = 14.sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-
                 // Image Placeholder
-                /*if (comment.image != null) {
-                    Text(
-                        text = comment.text,
-                        style = MaterialTheme.typography.body2,
-                        fontSize = 14.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(4.dp))
+                if (comment.urlPhoto.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Image(
-                        painter = painterResource(id = comment.image),
+                        painter = rememberImagePainter(comment.urlPhoto),
                         contentScale = ContentScale.Crop,
                         contentDescription = "Comment Image",
                         modifier = Modifier
-                            .size(200.dp)
+                            .size(240.dp)
                             .clip(RoundedCornerShape(8.dp))
                     )
 
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                } else {*/
-
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
         }
     }
@@ -135,7 +141,8 @@ fun CommentCardPreview() {
     val comment = CommentList(
         username = "User1",
         starRating = 4.5,
-        comment = "Makanannya sangat enak!"
+        comment = "Makanannya sangat enak!",
+        urlPhoto = "Some URL photo"
     )
 
     EmpowerUTheme() {

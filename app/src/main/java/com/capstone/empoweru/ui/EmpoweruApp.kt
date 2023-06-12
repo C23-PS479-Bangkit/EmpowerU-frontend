@@ -43,8 +43,9 @@ import com.capstone.empoweru.utils.UserPreferences
 @Composable
 fun EmpoweruApp(
     userPreferences: UserPreferences,
-    modifier: Modifier = Modifier,
+    context: Context,
     navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier
 ) {
 
     var locations by remember { mutableStateOf(emptyList<Location>()) }
@@ -115,7 +116,7 @@ fun EmpoweruApp(
                 composable(Screen.Review.route) {
                     val location = homeScreenViewModel.selectedLocation.value
                     if (location != null) {
-                        ReviewScreen(navController, location)
+                        ReviewScreen(navController, location, context)
                     }
                 }
 
@@ -199,8 +200,10 @@ private fun BottomBar(
 @Composable
 fun EmpoweruAppPreview() {
     val userPreferences = UserPreferences.getInstance(LocalContext.current)
+    val context = LocalContext.current
 
     EmpoweruApp(
         userPreferences = userPreferences,
+        context = context
     )
 }

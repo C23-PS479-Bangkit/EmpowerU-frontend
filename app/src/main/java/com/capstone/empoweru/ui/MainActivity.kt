@@ -25,7 +25,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             EmpoweruApp(
-                userPreferences = userPreferences
+                userPreferences = userPreferences,
+                context = this
             )
         }
 

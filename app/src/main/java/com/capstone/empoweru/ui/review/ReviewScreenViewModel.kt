@@ -1,6 +1,7 @@
 package com.capstone.empoweru.ui.review
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,13 +15,14 @@ import com.capstone.empoweru.utils.CommentEvent
 import com.capstone.empoweru.utils.CommentEventBus
 import com.capstone.empoweru.utils.UserPreferences
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class ReviewScreenViewModel(
     private val context: Context,
     private val commentRepository: CommentRepository
     ) : ViewModel() {
 
-    fun addComment(location: Location, rating: Rating?, comment: String, callback: (Boolean) -> Unit) {
+    fun addComment(location: Location, rating: Rating?, comment: String, base64: String?, callback: (Boolean) -> Unit) {
         val userPreferences = UserPreferences.getInstance(context)
         val userID = userPreferences.id
 
@@ -33,7 +35,7 @@ class ReviewScreenViewModel(
 
         viewModelScope.launch {
             try {
-                val request = CommentRequest(location.GMapsID, userID, rating.value, comment)
+                val request = CommentRequest(location.GMapsID, userID, rating.value, comment, base64)
                 val response = commentRepository.createComment(request)
 
                 CommentEventBus.postEvent(CommentEvent.CommentAdded)
@@ -42,8 +44,13 @@ class ReviewScreenViewModel(
                 callback(true)
 
             } catch (e: Exception) {
+                Log.e("ReviewScreenViewModel", "Exception while creating comment", e)
 
-                Toast.makeText(context, "Terjadi kesalahan saat mengunggah Komentar", Toast.LENGTH_SHORT).show()
+                if (e is HttpException && e.code() == 413) {
+                    Toast.makeText(context, "Ukuran foto yang ingin diupload terlalu besar", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Terjadi kesalahan saat mengunggah Komentar", Toast.LENGTH_SHORT).show()
+                }
                 callback(false)
             }
         }

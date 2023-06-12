@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField("String", "BASE_URL", "\"https://empoweru-backend-vyxkms4tbq-et.a.run.app/\"")
-        buildConfigField("String", "PLACES_API", "\"CEK_DISCORD\"")
+        buildConfigField("String", "PLACES_API", "\"REPLACE THIS WITH YOUR PLACES API\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

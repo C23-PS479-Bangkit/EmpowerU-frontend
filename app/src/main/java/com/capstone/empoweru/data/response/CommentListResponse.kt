@@ -7,6 +7,7 @@ data class CommentListResponse(
 data class CommentList(
     val username: String,
     val starRating: Double,
-    val comment: String
+    val comment: String,
+    val urlPhoto: String
 )
 
