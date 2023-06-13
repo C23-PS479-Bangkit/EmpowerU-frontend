@@ -38,14 +38,12 @@ import com.capstone.empoweru.ui.components.navigation.CancelButton
 import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import java.io.ByteArrayOutputStream
-import java.io.InputStream
 
 @Composable
 fun ReviewScreen(
     navController: NavHostController,
     location: Location,
-    context: Context,
-    modifier: Modifier = Modifier
+    context: Context
 ) {
     val viewModel: ReviewScreenViewModel = viewModel(
         factory = ReviewScreenViewModelFactory(LocalContext.current))
@@ -165,8 +163,6 @@ fun ReviewScreen(
                                 popUpTo(navController.graph.startDestinationId)
                                 launchSingleTop = true
                             }
-                        } else {
-
                         }
                     }
                 },

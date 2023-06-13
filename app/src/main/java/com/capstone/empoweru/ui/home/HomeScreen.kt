@@ -1,16 +1,14 @@
 package com.capstone.empoweru.ui.home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,12 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.capstone.empoweru.R
-import com.capstone.empoweru.data.dummy.CategoryItem
 import com.capstone.empoweru.data.dummy.getCategory
 import com.capstone.empoweru.data.remote.ApiConfig
 import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.repository.LocationRepository
-import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CategoryButton
 import com.capstone.empoweru.ui.components.HeaderCard
 import com.capstone.empoweru.ui.components.SearchBar
@@ -36,13 +32,15 @@ import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.utils.UserPreferences
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    homeScreenViewModel: HomeScreenViewModel,
-    modifier: Modifier = Modifier
+    homeScreenViewModel: HomeScreenViewModel
 ) {
+
+    val systemWindowBackground = MaterialTheme.colors.background
 
     val username = homeScreenViewModel.getUsername()
     val locations = homeScreenViewModel.locations.value
@@ -77,45 +75,64 @@ fun HomeScreen(
         floatingActionButtonPosition = FabPosition.End,
         scaffoldState = rememberScaffoldState(),
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 52.dp)
         ) {
-            HeaderCard(
-                username = username,
-                modifier = Modifier.
-                padding(top = 8.dp)
-            )
-            SearchBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 4.dp),
-                onSearch = { query -> searchQuery = query }
-            )
-            CategoryRow(
-                homeScreenViewModel,
-                modifier = Modifier
-            )
-            UmkmList(
-                modifier = Modifier,
-                onItemClick = { location ->
-                    homeScreenViewModel.selectLocation(location)
-                    navController.navigate("${Screen.Detail.route}/${location.name}") {
-                        launchSingleTop = true
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                item {
+                    HeaderCard(
+                        username = username,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+
+                stickyHeader {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(systemWindowBackground)
+                            .padding(top = 8.dp)
+                    ) {
+                        Column {
+                            SearchBar(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 4.dp),
+                                onSearch = { query -> searchQuery = query }
+                            )
+                            CategoryRow(homeScreenViewModel)
+                            Spacer(modifier = Modifier.height(2.dp))
+                        }
                     }
-                },
-                locations = filteredLocations,
-                isLoading = isLoading
-            )
+                }
+
+                items(filteredLocations) { location ->
+                    UmkmCard(location) {
+                        homeScreenViewModel.selectLocation(location)
+                        navController.navigate("${Screen.Detail.route}/${location.name}") {
+                            launchSingleTop = true
+                        }
+                    }
+                }
+            }
+
+            if (isLoading && filteredLocations.isEmpty()) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+            }
         }
     }
 }
 
 @Composable
 fun CategoryRow(
-    homeScreenViewModel: HomeScreenViewModel,
-    modifier: Modifier = Modifier
+    homeScreenViewModel: HomeScreenViewModel
 ) {
     val categoryList = getCategory()
 
@@ -134,34 +151,6 @@ fun CategoryRow(
         }
     }
 }
-
-
-@Composable
-fun UmkmList(
-    modifier: Modifier = Modifier,
-    onItemClick: (Location) -> Unit,
-    locations: List<Location>,
-    isLoading: Boolean
-) {
-    LazyColumn(modifier) {
-        items(locations) { location ->
-            UmkmCard(location, onClick = { onItemClick(location) })
-        }
-
-        if (isLoading) {
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillParentMaxSize()
-                        .wrapContentSize(Alignment.Center)
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {

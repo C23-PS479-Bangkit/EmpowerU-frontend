@@ -1,6 +1,5 @@
 package com.capstone.empoweru.ui.profile
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,17 +11,13 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,14 +32,12 @@ import com.capstone.empoweru.utils.UserPreferences
 fun ProfileScreen(
     navController: NavHostController,
     viewModel: ProfileViewModel,
-    modifier: Modifier = Modifier
 ) {
     val profilePicture = painterResource(R.drawable.example_profile)
-    val review = 4
 
     val context = LocalContext.current
     val username = viewModel.userPreferences.username ?: ""
-    val id = viewModel.userPreferences.id ?: ""
+    val email = viewModel.userPreferences.email ?: ""
 
     Box(
         modifier = Modifier
@@ -120,7 +113,7 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = username ?: "",
+                        text = username,
                         style = MaterialTheme.typography.h1,
                         fontSize = 24.sp,
                         modifier = Modifier
@@ -131,7 +124,7 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(24.dp))
 
                     Text(
-                        text = "Reviews",
+                        text = "Email terdaftar",
                         style = MaterialTheme.typography.h2,
                         fontSize = 14.sp,
                         modifier = Modifier
@@ -142,7 +135,7 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = review.toString(),
+                        text = email,
                         style = MaterialTheme.typography.h1,
                         fontSize = 24.sp,
                         modifier = Modifier

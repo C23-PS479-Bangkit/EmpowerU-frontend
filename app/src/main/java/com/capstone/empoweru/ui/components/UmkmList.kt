@@ -1,6 +1,5 @@
 package com.capstone.empoweru.ui.components
 
-import android.icu.number.Scale
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -22,23 +20,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.capstone.empoweru.data.dummy.Umkm
 import com.capstone.empoweru.R
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalCoilApi::class)
 @Composable
 fun UmkmCard(
     location: Location,
-    onClick: () -> Unit
+    onItemClick: (Location) -> Unit
 ) {
     Card(
         modifier = Modifier
             .padding(horizontal = 4.dp)
             .fillMaxWidth(),
-        onClick = onClick
+        onClick = { onItemClick(location) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -46,11 +44,7 @@ fun UmkmCard(
                 .padding(16.dp)
         ) {
             Image(
-                // Default Image
-                /*painter = painterResource(R.drawable.example_umkm),*/
-
-                // Get the Image from the API
-                painter = if (location.urlPhoto.isNullOrEmpty() || location.urlPhoto == "No Photos") {
+                painter = if (location.urlPhoto.isEmpty() || location.urlPhoto == "No Photos") {
                     painterResource(R.drawable.example_umkm)
                 } else {
                     rememberImagePainter(location.urlPhoto)
@@ -60,19 +54,17 @@ fun UmkmCard(
                 modifier = Modifier
                     .size(84.dp)
                     .clip(RoundedCornerShape(8.dp))
-
             )
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column() {
+            Column {
                 Text(
                     text = location.name,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     maxLines = 1,
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 Text(
@@ -94,8 +86,7 @@ fun UmkmCard(
                         imageVector = Icons.Default.Star,
                         contentDescription = "Rating",
                         tint = Color(0xFFFFCC00),
-                        modifier = Modifier
-                            .size(20.dp)
+                        modifier = Modifier.size(20.dp)
                     )
 
                     Spacer(modifier = Modifier.width(4.dp))
@@ -104,8 +95,7 @@ fun UmkmCard(
                         text = String.format("%.1f", location.rating),
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
-                        modifier = Modifier
-                            .padding(top = 6.dp)
+                        modifier = Modifier.padding(top = 6.dp)
                     )
                 }
             }
@@ -126,7 +116,7 @@ fun UmkmCardPreview() {
         urlPhoto = ""
     )
     
-    EmpowerUTheme() {
+    EmpowerUTheme {
         UmkmCard(location = location) { }
     }
 }

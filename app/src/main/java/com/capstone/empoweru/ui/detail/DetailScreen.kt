@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,33 +18,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.capstone.empoweru.data.dummy.Umkm
-import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.R
-import com.capstone.empoweru.data.dummy.generateDummyComments
 import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.CommentCard
 import com.capstone.empoweru.ui.components.navigation.Screen
+import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalCoilApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen(
     location: Location,
-    navController: NavHostController,
-    modifier: Modifier = Modifier
+    navController: NavHostController
 ) {
     val viewModel: DetailScreenViewModel = viewModel(
         factory = DetailScreenViewModelFactory(
@@ -69,7 +64,7 @@ fun DetailScreen(
                     contentDescription = "Add",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(18.dp)
+                        .size(20.dp)
                 )
             }
         },
@@ -86,7 +81,7 @@ fun DetailScreen(
                     /*painter = painterResource(R.drawable.example_umkm),*/
 
                     // Image fetched from API
-                    painter = if (location.urlPhoto.isNullOrEmpty() || location.urlPhoto == "No Photos") {
+                    painter = if (location.urlPhoto.isEmpty() || location.urlPhoto == "No Photos") {
                         painterResource(R.drawable.example_umkm)
                     } else {
                         rememberImagePainter(location.urlPhoto)
@@ -170,7 +165,7 @@ fun DetailScreen(
                         fontSize = 14.sp,
                         color = when (location.impression) {
                             "Netral" -> Color.Gray
-                            "Baik" -> Color.Green
+                            "Positive" -> Color.Green
                             else -> Color.Red
                         }
                     )
@@ -186,18 +181,9 @@ fun DetailScreen(
                         .fillMaxSize()
                 ) {
                     Text(
-                        text = buildAnnotatedString {
-                            append("Komentar ")
-                            withStyle(
-                                style = SpanStyle(
-                                    fontSize = 14.sp
-                                )
-                            ) {
-                                append("($commentCount)")
-                            }
-                        },
+                        text = "Komentar - $commentCount",
                         style = MaterialTheme.typography.h1,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Medium,
                         fontSize = 16.sp,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -209,6 +195,26 @@ fun DetailScreen(
             items(comments) { comment ->
                 CommentCard(comment = comment)
                 Spacer(modifier = Modifier.height(8.dp))
+            }
+
+            if (comments.isEmpty() && commentCount == 0) {
+                item {
+                    Row(
+                        modifier = Modifier
+                            .padding(horizontal = 18.dp, vertical = 96.dp)
+                            .fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Kelihatannya belum ada yang memberikan Komentar...",
+                            style = MaterialTheme.typography.h1,
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(vertical = 12.dp)
+                        )
+                    }
+                }
             }
         }
     }
