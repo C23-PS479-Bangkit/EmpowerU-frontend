@@ -8,17 +8,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddLocationAlt
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.capstone.empoweru.R
 import com.capstone.empoweru.data.dummy.getCategory
 import com.capstone.empoweru.data.remote.ApiConfig
 import com.capstone.empoweru.data.repository.ListCommentRepository
@@ -64,11 +64,11 @@ fun HomeScreen(
                     .padding(bottom = 52.dp)
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_add_location),
+                    imageVector = Icons.Filled.AddLocationAlt,
                     contentDescription = "Add",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(24.dp)
+                        .size(28.dp)
                 )
             }
         },
@@ -123,7 +123,8 @@ fun HomeScreen(
             if (isLoading && filteredLocations.isEmpty()) {
                 CircularProgressIndicator(
                     modifier = Modifier
-                        .align(Alignment.Center)
+                        .align(Alignment.Center),
+                    color = Color.Red
                 )
             }
         }

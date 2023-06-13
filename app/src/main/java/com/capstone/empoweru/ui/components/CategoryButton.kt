@@ -24,15 +24,16 @@ fun CategoryButton(
     onCategorySelected: (CategoryItem) -> Unit
 ) {
 
+    val whiteColor = MaterialTheme.colors.background
     var isSelected = selectedCategory == category
 
     Button(
         onClick = { onCategorySelected(category) },
         shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = if (isSelected) MaterialTheme.colors.primary else Color.White,
-            contentColor = if (isSelected) MaterialTheme.colors.onPrimary else Color.Red,
-            disabledBackgroundColor = Color.White,
+            backgroundColor = if (isSelected) Color.Red else whiteColor,
+            contentColor = if (isSelected) Color.White else Color.Red,
+            disabledBackgroundColor = whiteColor,
             disabledContentColor = Color.Red
         ),
         border = if (!isSelected) BorderStroke(1.dp, Color.Red) else null,

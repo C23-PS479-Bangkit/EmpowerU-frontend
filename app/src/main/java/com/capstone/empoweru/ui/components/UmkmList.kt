@@ -3,10 +3,7 @@ package com.capstone.empoweru.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
@@ -36,7 +33,8 @@ fun UmkmCard(
         modifier = Modifier
             .padding(horizontal = 4.dp)
             .fillMaxWidth(),
-        onClick = { onItemClick(location) }
+        onClick = { onItemClick(location) },
+        backgroundColor = MaterialTheme.colors.background
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

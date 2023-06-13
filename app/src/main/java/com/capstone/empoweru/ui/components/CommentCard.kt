@@ -38,7 +38,8 @@ fun CommentCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
-        elevation = 2.dp
+        elevation = 2.dp,
+        backgroundColor = MaterialTheme.colors.background
     ) {
         Row(
             verticalAlignment = Alignment.Top,

@@ -39,9 +39,9 @@ fun CommentText(
                 fontWeight = FontWeight.Medium
             ),
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent, // Set the indicator color to transparent
-                unfocusedIndicatorColor = Color.Transparent // Set the indicator color to transparent
+                backgroundColor = MaterialTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
             ),
             placeholder = {
                 Text(

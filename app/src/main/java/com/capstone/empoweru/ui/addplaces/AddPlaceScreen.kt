@@ -31,8 +31,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.capstone.empoweru.data.request.CreateLocationRequest
-import com.capstone.empoweru.ui.components.navigation.AddButton
-import com.capstone.empoweru.ui.components.navigation.CancelButton
+import com.capstone.empoweru.ui.components.AddButton
+import com.capstone.empoweru.ui.components.CancelButton
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.ui.theme.PoppinsTypography
 import com.google.android.libraries.places.api.model.AutocompletePrediction

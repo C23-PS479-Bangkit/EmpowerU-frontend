@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -60,11 +61,11 @@ fun DetailScreen(
                 backgroundColor = Color.Red
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_add_comment),
+                    imageVector = Icons.Filled.ChatBubble,
                     contentDescription = "Add",
                     tint = Color.White,
                     modifier = Modifier
-                        .size(20.dp)
+                        .size(24.dp)
                 )
             }
         },
@@ -177,7 +178,7 @@ fun DetailScreen(
             stickyHeader {
                 Box(
                     modifier = Modifier
-                        .background(Color.White)
+                        .background(MaterialTheme.colors.background)
                         .fillMaxSize()
                 ) {
                     Text(

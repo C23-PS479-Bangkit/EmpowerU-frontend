@@ -9,6 +9,7 @@
     <TextView
         android:id="@+id/tv_hello"
         style="@style/poppins_medium"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -35,6 +36,7 @@
     <TextView
         android:id="@+id/tv_create_account"
         style="@style/poppins_bold"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -49,6 +51,7 @@
     <EditText
         android:id="@+id/ed_register_name"
         style="@style/poppins_medium"
+        android:textColor="?android:textColorPrimary"
         android:maxLines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -59,6 +62,8 @@
         android:hint="@string/username"
         android:padding="@dimen/spacing_16"
         android:textSize="@dimen/text_size_14"
+        android:inputType="text"
+        android:imeOptions="actionNext"
         android:background="@drawable/bg_selected_edit_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +74,7 @@
     <EditText
         android:id="@+id/ed_register_email"
         style="@style/poppins_medium"
+        android:textColor="?android:textColorPrimary"
         android:maxLines="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -91,6 +97,7 @@
     <com.capstone.empoweru.widget.PasswordEditText
         android:id="@+id/ed_register_password"
         style="@style/poppins_medium"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -127,6 +134,7 @@
     <TextView
         android:id="@+id/tv_have_account"
         style="@style/poppins_regular"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"

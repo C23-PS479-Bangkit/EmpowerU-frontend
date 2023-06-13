@@ -31,10 +31,10 @@ import androidx.navigation.compose.rememberNavController
 import com.capstone.empoweru.data.dummy.Rating
 import com.capstone.empoweru.data.dummy.ratings
 import com.capstone.empoweru.data.response.Location
+import com.capstone.empoweru.ui.components.AddButton
+import com.capstone.empoweru.ui.components.CancelButton
 import com.capstone.empoweru.ui.components.CommentText
 import com.capstone.empoweru.ui.components.ImageButton
-import com.capstone.empoweru.ui.components.navigation.AddButton
-import com.capstone.empoweru.ui.components.navigation.CancelButton
 import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import java.io.ByteArrayOutputStream

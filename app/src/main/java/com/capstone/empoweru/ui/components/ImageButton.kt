@@ -2,29 +2,29 @@ package com.capstone.empoweru.ui.components
 
 import android.net.Uri
 import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ImageSearch
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.R
+import com.capstone.empoweru.ui.theme.EmpowerUTheme
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ImageButton(
     onClick: () -> Unit,
@@ -40,8 +40,8 @@ fun ImageButton(
             onClick = { onClick() },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.White,
-                contentColor = Color.Black,
+                backgroundColor = MaterialTheme.colors.background,
+                contentColor = MaterialTheme.colors.onSurface,
             ),
             modifier = Modifier
                 .fillMaxSize()
@@ -59,9 +59,10 @@ fun ImageButton(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_photos),
-                        contentDescription = "Upload Image",
+                    Icon(
+                        imageVector = Icons.Default.ImageSearch,
+                        contentDescription = "Images",
+                        tint = MaterialTheme.colors.onSurface,
                         modifier = Modifier
                             .size(48.dp)
                     )
@@ -77,7 +78,7 @@ fun ImageButton(
                     )
 
                     Text(
-                        text = "Maksimal 1MB",
+                        text = "(Maksimal 1 MB!)",
                         style = MaterialTheme.typography.body1,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal,
@@ -96,7 +97,7 @@ fun ImageButton(
 fun ImageButtonPreview() {
     EmpowerUTheme() {
         ImageButton(
-            onClick = { /*TODO*/ },
+            onClick = { },
             onImageSelected = { },
             selectedImageUri = null
         )

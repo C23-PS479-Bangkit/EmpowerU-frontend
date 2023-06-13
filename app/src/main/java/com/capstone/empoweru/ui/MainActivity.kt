@@ -1,6 +1,8 @@
 package com.capstone.empoweru.ui
 
 import android.app.Activity
+import android.app.UiModeManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.capstone.empoweru.BuildConfig
+import com.capstone.empoweru.ui.theme.EmpowerUTheme
 import com.capstone.empoweru.utils.UserPreferences
 import com.google.android.libraries.places.api.Places
 
@@ -18,16 +21,25 @@ class MainActivity : ComponentActivity() {
         Places.initialize(applicationContext, BuildConfig.PLACES_API)
 
         val userPreferences = UserPreferences.getInstance(this)
+        val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+        val isDarkMode = uiModeManager.nightMode == UiModeManager.MODE_NIGHT_YES
 
         setContent {
-            EmpoweruApp(
-                userPreferences = userPreferences,
-                context = this
-            )
+            EmpowerUTheme() {
+                EmpoweruApp(
+                    userPreferences = userPreferences,
+                    context = this
+                )
+            }
         }
 
-        window.statusBarColor = Color.WHITE
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        if (isDarkMode) {
+            window.statusBarColor = Color.BLACK
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        } else {
+            window.statusBarColor = Color.WHITE
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
     }
 
     @Deprecated("Deprecated in Java")
