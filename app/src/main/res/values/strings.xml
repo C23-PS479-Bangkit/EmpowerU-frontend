@@ -15,4 +15,9 @@
     <string name="no_account">Belum mempunyai Akun?</string>
     <string name="have_account">Sudah mempunyai Akun?</string>
     <string name="click_here">Klik Disini</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="search_UMKM">Cari UMKM</string>
+
+    <string name="empoweru_desc">Empowering UMKMs through the power of community</string>
 </resources>

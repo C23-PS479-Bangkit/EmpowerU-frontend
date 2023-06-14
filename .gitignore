@@ -70,10 +70,11 @@ build/
 node_modules/
 .rpt2_cache/
 libraries/tools/kotlin-test-js-runner/lib/
-local.properties
 buildSrcTmp/
 distTmp/
 outTmp/
 /test.output
 /kotlin-native/dist
 kotlin-ide/
+/local.properties
+local.properties

@@ -9,6 +9,7 @@
     <TextView
         android:id="@+id/tv_hello"
         style="@style/poppins_medium"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -35,6 +36,7 @@
     <TextView
         android:id="@+id/tv_login_account"
         style="@style/poppins_bold"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -46,40 +48,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
 
-    <com.capstone.empoweru.widget.EditText
+    <EditText
         android:id="@+id/ed_login_name"
-        style="@style/poppins_light"
+        style="@style/poppins_medium"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
         android:layout_marginTop="@dimen/spacing_64"
-        android:drawableStart="@drawable/ic_account"
+        app:drawableStartCompat="@drawable/ic_account"
+        android:background="@drawable/bg_selected_edit_text"
         android:drawablePadding="@dimen/spacing_8"
+        android:maxLines="1"
         android:hint="@string/username"
         android:padding="@dimen/spacing_16"
-        android:textColor="@color/gray_200"
-        android:textSize="@dimen/text_size_12"
+        android:textSize="@dimen/text_size_14"
+        android:inputType="text"
+        android:imeOptions="actionNext"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_login_account"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.capstone.empoweru.widget.EditText
+    <com.capstone.empoweru.widget.PasswordEditText
         android:id="@+id/ed_login_password"
-        style="@style/poppins_light"
+        style="@style/poppins_medium"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
         android:layout_marginTop="@dimen/spacing_16"
-        android:drawableStart="@drawable/ic_lock"
-        android:drawableEnd="@drawable/ic_password"
+        app:drawableStartCompat="@drawable/ic_lock"
+        app:drawableEndCompat="@drawable/ic_password"
         android:drawablePadding="@dimen/spacing_8"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:background="@drawable/bg_selected_edit_text"
         android:padding="@dimen/spacing_16"
-        android:textColor="@color/gray_200"
-        android:textSize="@dimen/text_size_12"
+        android:textSize="@dimen/text_size_14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,24 +108,10 @@
         app:text="@string/button_login"
         app:textAllCaps="false" />
 
-    <Button
-        android:id="@+id/btn_login_google"
-        style="@style/GoogleSignInButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_48"
-        android:layout_marginTop="@dimen/spacing_16"
-        android:background="@drawable/bg_button_rounded"
-        android:text="@string/login_google"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/tv_no_account"
         style="@style/poppins_regular"
+        android:textColor="?android:textColorPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
@@ -129,12 +122,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login_google"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tv_click_have_account"
-        style="@style/poppins_bold"
+        style="@style/poppins_medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_48"
