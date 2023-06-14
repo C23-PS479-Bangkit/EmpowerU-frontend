@@ -1,7 +1,6 @@
 package com.capstone.empoweru.ui.detail
 
 import androidx.lifecycle.*
-import com.capstone.empoweru.data.dummy.Comment
 import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.response.CommentList
 import com.capstone.empoweru.utils.CommentEvent

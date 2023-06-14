@@ -1,4 +1,4 @@
-package com.capstone.empoweru.utils
+package com.capstone.empoweru.data.local
 
 import android.content.Context
 import android.content.SharedPreferences

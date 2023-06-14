@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -55,7 +55,8 @@ class SplashViewModel(private val context: Context, private val userPreferences:
 
 class SplashViewModelFactory(
     private val context: Context,
-    private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
+    private val userPreferences: UserPreferences
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {

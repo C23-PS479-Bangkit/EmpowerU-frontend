@@ -6,14 +6,14 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.capstone.empoweru.data.dummy.Rating
+import com.capstone.empoweru.data.local.Rating
 import com.capstone.empoweru.data.remote.ApiConfig.apiService
 import com.capstone.empoweru.data.repository.CommentRepository
 import com.capstone.empoweru.data.request.CommentRequest
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.utils.CommentEvent
 import com.capstone.empoweru.utils.CommentEventBus
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 

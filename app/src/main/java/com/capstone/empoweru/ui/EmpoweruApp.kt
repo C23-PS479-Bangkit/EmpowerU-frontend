@@ -37,7 +37,7 @@ import com.capstone.empoweru.ui.profile.ProfileViewModelFactory
 import com.capstone.empoweru.ui.review.ReviewScreen
 import com.capstone.empoweru.ui.theme.BottomBarTheme
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable

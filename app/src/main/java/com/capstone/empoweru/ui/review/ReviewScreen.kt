@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.capstone.empoweru.data.dummy.Rating
-import com.capstone.empoweru.data.dummy.ratings
+import com.capstone.empoweru.data.local.Rating
+import com.capstone.empoweru.data.local.ratings
 import com.capstone.empoweru.data.response.Location
 import com.capstone.empoweru.ui.components.AddButton
 import com.capstone.empoweru.ui.components.CancelButton

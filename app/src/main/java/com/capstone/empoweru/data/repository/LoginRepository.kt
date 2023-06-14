@@ -8,7 +8,7 @@ import com.capstone.empoweru.data.request.UserDataRequest
 import com.capstone.empoweru.data.response.ErrorResponse
 import com.capstone.empoweru.data.response.LoginResponse
 import com.capstone.empoweru.data.response.UserDataResponse
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 import com.google.gson.Gson
 
 class LoginRepository(

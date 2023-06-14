@@ -11,7 +11,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.capstone.empoweru.BuildConfig
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 import com.google.android.libraries.places.api.Places
 
 @Suppress("DEPRECATION")

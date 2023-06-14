@@ -1,6 +1,5 @@
 package com.capstone.empoweru.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.capstone.empoweru.data.dummy.Comment
 import com.capstone.empoweru.R
 import com.capstone.empoweru.data.response.CommentList
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
@@ -31,8 +29,7 @@ import com.capstone.empoweru.ui.theme.EmpowerUTheme
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun CommentCard(
-    comment: CommentList,
-    modifier: Modifier = Modifier
+    comment: CommentList
 ) {
     Card(
         modifier = Modifier

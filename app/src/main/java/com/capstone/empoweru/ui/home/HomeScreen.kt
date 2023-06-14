@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.capstone.empoweru.data.dummy.getCategory
+import com.capstone.empoweru.data.local.getCategory
 import com.capstone.empoweru.data.remote.ApiConfig
 import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.repository.LocationRepository
@@ -29,7 +29,7 @@ import com.capstone.empoweru.ui.components.SearchBar
 import com.capstone.empoweru.ui.components.UmkmCard
 import com.capstone.empoweru.ui.components.navigation.Screen
 import com.capstone.empoweru.ui.theme.EmpowerUTheme
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -105,7 +105,6 @@ fun HomeScreen(
                                 onSearch = { query -> searchQuery = query }
                             )
                             CategoryRow(homeScreenViewModel)
-                            Spacer(modifier = Modifier.height(2.dp))
                         }
                     }
                 }

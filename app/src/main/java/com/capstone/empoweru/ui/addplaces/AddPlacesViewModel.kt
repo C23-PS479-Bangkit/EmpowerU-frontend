@@ -8,6 +8,7 @@ import com.capstone.empoweru.data.response.CreateLocationResponse
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
@@ -31,7 +32,31 @@ class AddPlaceViewModel(application: Application) : AndroidViewModel(application
 
         placesClient.findAutocompletePredictions(request)
             .addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
-                _searchResults.value = response.autocompletePredictions
+                val filteredPredictions = response.autocompletePredictions.filter { prediction ->
+                    val placeTypes = prediction.placeTypes
+                    val umkmTypes = listOf(
+                        Place.Type.RESTAURANT,
+                        Place.Type.STORE,
+                        Place.Type.CAFE,
+                        Place.Type.CLOTHING_STORE,
+                        Place.Type.CONVENIENCE_STORE,
+                        Place.Type.BAKERY,
+                        Place.Type.CAR_WASH,
+                        Place.Type.HARDWARE_STORE,
+                        Place.Type.FURNITURE_STORE,
+                        Place.Type.DRUGSTORE,
+                        Place.Type.FLORIST,
+                        Place.Type.LAUNDRY,
+                        Place.Type.PET_STORE,
+                        Place.Type.PHARMACY,
+                        Place.Type.PLUMBER,
+                        Place.Type.VETERINARY_CARE
+                    )
+
+                    placeTypes.intersect(umkmTypes).isNotEmpty()
+                }
+
+                _searchResults.value = filteredPredictions
             }
             .addOnFailureListener { exception: Exception ->
                 // Handle error

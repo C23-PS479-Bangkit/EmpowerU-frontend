@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.empoweru.ui.login.LoginActivity
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 
 class ProfileViewModel(
     val userPreferences: UserPreferences

@@ -1,15 +1,14 @@
 package com.capstone.empoweru.ui.home
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstone.empoweru.data.dummy.CategoryItem
+import com.capstone.empoweru.data.local.CategoryItem
 import com.capstone.empoweru.data.repository.ListCommentRepository
 import com.capstone.empoweru.data.repository.LocationRepository
 import com.capstone.empoweru.data.response.Location
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException

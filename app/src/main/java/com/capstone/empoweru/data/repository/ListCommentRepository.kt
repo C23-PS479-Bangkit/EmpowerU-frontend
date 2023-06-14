@@ -1,6 +1,5 @@
 package com.capstone.empoweru.data.repository
 
-import com.capstone.empoweru.data.dummy.Comment
 import com.capstone.empoweru.data.remote.ApiConfig
 import com.capstone.empoweru.data.response.CommentList
 

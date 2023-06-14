@@ -14,7 +14,7 @@ import com.capstone.empoweru.data.repository.LoginRepository
 import com.capstone.empoweru.databinding.ActivityLoginBinding
 import com.capstone.empoweru.ui.MainActivity
 import com.capstone.empoweru.ui.register.RegisterActivity
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 
 class LoginActivity : AppCompatActivity() {
 
@@ -81,9 +81,10 @@ class LoginActivity : AppCompatActivity() {
         val edPassword = ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(500)
         val button = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500)
         val noAccount = ObjectAnimator.ofFloat(binding.tvNoAccount, View.ALPHA, 1f).setDuration(500)
+        val clickAccount = ObjectAnimator.ofFloat(binding.tvClickHaveAccount, View.ALPHA, 1f).setDuration(500)
 
         AnimatorSet().apply {
-            playSequentially(title, appName, info, name, edPassword, button, noAccount)
+            playSequentially(title, appName, info, name, edPassword, button, noAccount, clickAccount)
             startDelay = 500
             start()
         }
@@ -96,5 +97,6 @@ class LoginActivity : AppCompatActivity() {
         binding.edLoginPassword.alpha = 0f
         binding.btnLogin.alpha = 0f
         binding.tvNoAccount.alpha = 0f
+        binding.tvClickHaveAccount.alpha = 0f
     }
 }

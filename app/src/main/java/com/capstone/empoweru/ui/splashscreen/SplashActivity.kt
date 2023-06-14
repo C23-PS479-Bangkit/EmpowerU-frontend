@@ -11,7 +11,7 @@ import com.capstone.empoweru.R
 import com.capstone.empoweru.databinding.ActivitySplashBinding
 import com.capstone.empoweru.ui.MainActivity
 import com.capstone.empoweru.ui.login.LoginActivity
-import com.capstone.empoweru.utils.UserPreferences
+import com.capstone.empoweru.data.local.UserPreferences
 
 
 @SuppressLint("CustomSplashScreen")

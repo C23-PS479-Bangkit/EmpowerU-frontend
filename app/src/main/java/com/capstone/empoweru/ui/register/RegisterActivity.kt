@@ -82,9 +82,10 @@ class RegisterActivity : AppCompatActivity() {
         val edPassword = ObjectAnimator.ofFloat(binding.edRegisterPassword, View.ALPHA, 1f).setDuration(500)
         val button = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(500)
         val haveAccount = ObjectAnimator.ofFloat(binding.tvHaveAccount, View.ALPHA, 1f).setDuration(500)
+        val clickAccount = ObjectAnimator.ofFloat(binding.tvClickHaveAccount, View.ALPHA, 1f).setDuration(500)
 
         AnimatorSet().apply {
-            playSequentially(title, appName, info, name, edEmail, edPassword, button, haveAccount)
+            playSequentially(title, appName, info, name, edEmail, edPassword, button, haveAccount, clickAccount)
             startDelay = 500
             start()
         }
@@ -98,5 +99,6 @@ class RegisterActivity : AppCompatActivity() {
         binding.edRegisterPassword.alpha = 0f
         binding.btnRegister.alpha = 0f
         binding.tvHaveAccount.alpha = 0f
+        binding.tvClickHaveAccount.alpha = 0f
     }
 }

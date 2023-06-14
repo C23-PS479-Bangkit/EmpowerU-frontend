@@ -1,4 +1,4 @@
-package com.capstone.empoweru.data.dummy
+package com.capstone.empoweru.data.local
 
 data class Rating(val value: Int, val description: String)
 

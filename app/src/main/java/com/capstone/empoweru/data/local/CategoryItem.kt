@@ -1,6 +1,6 @@
-package com.capstone.empoweru.data.dummy
+package com.capstone.empoweru.data.local
 
-import com.capstone.empoweru.data.dummy.CategoryItem.*
+import com.capstone.empoweru.data.local.CategoryItem.*
 
 enum class CategoryItem(val value: String) {
     TRENDING("Trending"),
